@@ -1,0 +1,73 @@
+<section id="faq" class="py-20 bg-light-bg dark:bg-dark-bg">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" x-reveal>
+            <h2 class="font-display font-bold text-3xl md:text-4xl text-gray-900 dark:text-white mb-4">
+                Common <span class="text-light-accent dark:text-dark-accent">Queries</span>
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Everything you need to know about the program structure, payment, and outcomes.
+            </p>
+        </div>
+
+        <div class="space-y-4" x-data="{ active: null }">
+            <!-- Item 1 -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-[#0d121f] overflow-hidden" x-reveal>
+                <button @click="active = (active === 1 ? null : 1)" class="w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none">
+                    <span class="font-medium text-gray-900 dark:text-white">Do I need prior coding experience?</span>
+                    <span class="transform transition-transform duration-200" :class="active === 1 ? 'rotate-180' : ''">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </button>
+                <div x-show="active === 1" x-collapse>
+                    <div class="px-6 pb-4 text-gray-600 dark:text-gray-400 text-sm leading-relaxed border-t border-gray-100 dark:border-gray-800 pt-4">
+                        No. Our Full Stack Engineering path is designed for absolute beginners. We start with the fundamentals of computer science and progressively build up to advanced concepts. However, be prepared for a steep learning curve.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-[#0d121f] overflow-hidden" x-reveal>
+                <button @click="active = (active === 2 ? null : 2)" class="w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none">
+                    <span class="font-medium text-gray-900 dark:text-white">What is the time commitment?</span>
+                    <span class="transform transition-transform duration-200" :class="active === 2 ? 'rotate-180' : ''">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </button>
+                <div x-show="active === 2" x-collapse>
+                    <div class="px-6 pb-4 text-gray-600 dark:text-gray-400 text-sm leading-relaxed border-t border-gray-100 dark:border-gray-800 pt-4">
+                        This is an intensive bootcamp. We require 40-50 hours per week for the full-time program. Part-time options are available but require 20-25 hours per week including weekends.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-[#0d121f] overflow-hidden" x-reveal>
+                <button @click="active = (active === 3 ? null : 3)" class="w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none">
+                    <span class="font-medium text-gray-900 dark:text-white">Do you guarantee a job?</span>
+                    <span class="transform transition-transform duration-200" :class="active === 3 ? 'rotate-180' : ''">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </button>
+                <div x-show="active === 3" x-collapse>
+                    <div class="px-6 pb-4 text-gray-600 dark:text-gray-400 text-sm leading-relaxed border-t border-gray-100 dark:border-gray-800 pt-4">
+                        We don't sell false promises. We guarantee a rigorous curriculum, career support, and interview prep. Our 94% placement rate speaks for itself, but the outcome depends on your effort and dedication.
+                    </div>
+                </div>
+            </div>
+             <!-- Item 4 -->
+            <div class="border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-[#0d121f] overflow-hidden" x-reveal>
+                <button @click="active = (active === 4 ? null : 4)" class="w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none">
+                    <span class="font-medium text-gray-900 dark:text-white">What is the tech stack?</span>
+                    <span class="transform transition-transform duration-200" :class="active === 4 ? 'rotate-180' : ''">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </button>
+                <div x-show="active === 4" x-collapse>
+                    <div class="px-6 pb-4 text-gray-600 dark:text-gray-400 text-sm leading-relaxed border-t border-gray-100 dark:border-gray-800 pt-4">
+                        We focus on the PERN stack (PostgreSQL, Express, React, Node.js) with TypeScript. We also cover modern DevOps tools like Docker, CI/CD, and AWS deployment.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

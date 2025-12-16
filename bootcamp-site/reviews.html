@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews | DevForge</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="alternate icon" href="assets/images/favicon.svg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        light: { bg: '#F9FAFB', surface: '#FFFFFF', text: '#111827', accent: '#2563EB', success: '#16A34A', border: '#E5E7EB' },
+                        dark: { bg: '#0B0F19', surface: '#111827', text: '#E5E7EB', accent: '#38BDF8' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'glass-gradient': 'linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0.02))',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+          ::-webkit-scrollbar { width: 8px; height: 8px; }
+          ::-webkit-scrollbar-track { @apply bg-light-bg dark:bg-dark-bg; }
+          ::-webkit-scrollbar-thumb { @apply bg-gray-300 dark:bg-gray-700 rounded; }
+          ::-webkit-scrollbar-thumb:hover { @apply bg-gray-400 dark:bg-gray-600; }
+        }
+        @layer components {
+          .glass { @apply bg-white/70 dark:bg-gray-900/60 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-sm; }
+          .glass-card { @apply glass rounded-xl; }
+          .btn-primary {
+            @apply px-6 py-3 bg-light-accent dark:bg-dark-accent text-white font-medium rounded-lg 
+                   shadow-[4px_4px_10px_rgba(0,0,0,0.1),-4px_-4px_10px_rgba(255,255,255,0.1)] 
+                   dark:shadow-[4px_4px_10px_rgba(0,0,0,0.3),-4px_-4px_10px_rgba(255,255,255,0.05)]
+                   hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0 active:shadow-inner;
+          }
+          .toggle-switch {
+            @apply w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center p-1 cursor-pointer shadow-inner transition-colors duration-300;
+          }
+          .toggle-knob {
+            @apply w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300;
+          }
+        }
+    </style>
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</head>
+<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text antialiased transition-colors duration-300" x-data x-init="$store.theme.init()">
+
+    <div x-data="loader('navbar')" x-html="html"></div>
+
+    <header class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="max-w-3xl" x-reveal>
+            <h1 class="font-display font-bold text-4xl md:text-5xl mb-6">
+                Code <span class="text-light-accent dark:text-dark-accent">Reviews</span>
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+                Honest feedback from engineers who survived the residency and are now shipping production code.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+        
+        <!-- Featured Editorial Review -->
+        <div class="mb-24" x-reveal>
+            <div class="glass-card p-8 md:p-12 border border-gray-200 dark:border-gray-800 relative overflow-hidden">
+                 <div class="absolute top-0 right-0 p-8 opacity-10 font-serif text-9xl leading-none text-light-accent dark:text-dark-accent select-none">”</div>
+                 
+                 <div class="relative z-10">
+                     <p class="text-2xl md:text-3xl font-display font-medium leading-relaxed mb-8">
+                         "Most bootcamps teach you syntax. DevForge taught me how to think. The focus on <span class="text-light-accent dark:text-dark-accent">distributed systems</span> and <span class="text-light-accent dark:text-dark-accent">low-level architecture</span> gave me the confidence to pass my Google L4 interviews."
+                     </p>
+                     
+                     <div class="flex items-center gap-4">
+                         <div class="w-16 h-16 bg-gray-200 rounded-full overflow-hidden flex-shrink-0">
+                             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces" alt="Alex Chen" class="w-full h-full object-cover">
+                         </div>
+                         <div>
+                             <div class="font-bold text-lg">Alex Chen</div>
+                             <div class="text-sm font-mono text-gray-500">Software Engineer @ Google</div>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+        </div>
+
+        <!-- PR Style Reviews Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Card 1 -->
+            <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg p-6" x-reveal>
+                <div class="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500">
+                    <span class="text-green-500">✔ Merged</span>
+                    <span>pr-review-2401</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                    "The curriculum is brutal but effective. I went from struggling with React state to building custom hooks and optimizing render cycles in 3 weeks."
+                </p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full overflow-hidden flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces" alt="Jessica Davis" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold">Jessica Davis</div>
+                        <div class="text-xs text-gray-500">Frontend @ Airbnb</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+             <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg p-6 flex flex-col" x-reveal>
+                <div class="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500">
+                    <span class="text-green-500">✔ Merged</span>
+                    <span>pr-review-2405</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed flex-grow">
+                    "The backend module is world-class. We built a custom simplified Redis clone. I use those concepts every day at my current job."
+                </p>
+                <div class="flex items-center gap-3 mt-auto">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full overflow-hidden flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=faces" alt="Marcus Ross" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold">Marcus Ross</div>
+                        <div class="text-xs text-gray-500">Backend @ Uber</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+             <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg p-6" x-reveal>
+                <div class="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500">
+                    <span class="text-green-500">✔ Merged</span>
+                    <span>pr-review-2412</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                    "Career support isn't just resume reviews. It's mock system design interviews with senior engineers. That was the game changer for me."
+                </p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full overflow-hidden flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=faces" alt="Sarah Lee" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold">Sarah Lee</div>
+                        <div class="text-xs text-gray-500">Full Stack @ Notion</div>
+                    </div>
+                </div>
+            </div>
+             <!-- Card 4 -->
+             <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg p-6 flex flex-col" x-reveal>
+                <div class="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500">
+                    <span class="text-green-500">✔ Merged</span>
+                    <span>pr-review-2415</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed flex-grow">
+                    "Don't join if you want a certificate. Join if you want to be an engineer. The hours are long, but the payoff is real."
+                </p>
+                <div class="flex items-center gap-3 mt-auto">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full overflow-hidden flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=faces" alt="David Kim" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold">David Kim</div>
+                        <div class="text-xs text-gray-500">DevOps @ AWS</div>
+                    </div>
+                </div>
+            </div>
+             <!-- Card 5 -->
+             <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg p-6 flex flex-col" x-reveal>
+                <div class="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500">
+                    <span class="text-green-500">✔ Merged</span>
+                    <span>pr-review-2420</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed flex-grow">
+                    "I was a bootcamp skeptic. DevForge proved me wrong. The instructors are actual practitioners, not just previous graduates."
+                </p>
+                <div class="flex items-center gap-3 mt-auto">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full overflow-hidden flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces" alt="Elena Patros" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold">Elena Patros</div>
+                        <div class="text-xs text-gray-500">Engineer @ Vercel</div>
+                    </div>
+                </div>
+            </div>
+             <!-- Card 6 -->
+             <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg p-6" x-reveal>
+                <div class="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500">
+                    <span class="text-green-500">✔ Merged</span>
+                    <span>pr-review-2422</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                    "The community is incredible. Even after graduating, I'm still in the discord getting help on architectural decisions for my startup."
+                </p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gray-100 rounded-full overflow-hidden flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces" alt="Tom Jenkins" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold">Tom Jenkins</div>
+                        <div class="text-xs text-gray-500">Founder @ Stealth</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <div x-data="loader('footer')" x-html="html"></div>
+</body>
+</html>

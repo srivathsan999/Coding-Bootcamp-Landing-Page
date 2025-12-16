@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Custom Scrollbar for "terminal" feel */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-light-bg dark:bg-dark-bg;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-700 rounded;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-600;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Utilities */
+  .glass {
+    @apply bg-white/70 dark:bg-gray-900/60 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-sm;
+  }
+  
+  .glass-card {
+    @apply glass rounded-xl;
+  }
+
+  /* Neomorphism Button (Primary CTA) */
+  .btn-primary {
+    @apply px-6 py-3 bg-light-accent dark:bg-dark-accent text-white font-medium rounded-lg 
+           shadow-[4px_4px_10px_rgba(0,0,0,0.1),-4px_-4px_10px_rgba(255,255,255,0.1)] 
+           dark:shadow-[4px_4px_10px_rgba(0,0,0,0.3),-4px_-4px_10px_rgba(255,255,255,0.05)]
+           hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0 active:shadow-inner;
+  }
+
+  /* Neomorphism Toggle */
+  .toggle-switch {
+    @apply w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center p-1 cursor-pointer
+           shadow-inner transition-colors duration-300;
+  }
+  
+  .toggle-knob {
+    @apply w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300;
+  }
+}

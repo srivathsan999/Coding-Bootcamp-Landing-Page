@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevForge | Professional Coding Bootcamp</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="alternate icon" href="assets/images/favicon.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (CDN for Development/Preview) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        light: {
+                            bg: '#F9FAFB',
+                            surface: '#FFFFFF',
+                            text: '#111827',
+                            accent: '#2563EB',
+                            success: '#16A34A',
+                            border: '#E5E7EB',
+                        },
+                        dark: {
+                            bg: '#0B0F19',
+                            surface: '#111827',
+                            text: '#E5E7EB',
+                            accent: '#38BDF8',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'glass-gradient': 'linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0.02))',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+          ::-webkit-scrollbar { width: 8px; height: 8px; }
+          ::-webkit-scrollbar-track { @apply bg-light-bg dark:bg-dark-bg; }
+          ::-webkit-scrollbar-thumb { @apply bg-gray-300 dark:bg-gray-700 rounded; }
+          ::-webkit-scrollbar-thumb:hover { @apply bg-gray-400 dark:bg-gray-600; }
+        }
+        @layer components {
+          .glass { @apply bg-white/70 dark:bg-gray-900/60 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-sm; }
+          .glass-card { @apply glass rounded-xl; }
+          .btn-primary {
+            @apply px-6 py-3 bg-light-accent dark:bg-dark-accent text-white font-medium rounded-lg 
+                   shadow-[4px_4px_10px_rgba(0,0,0,0.1),-4px_-4px_10px_rgba(255,255,255,0.1)] 
+                   dark:shadow-[4px_4px_10px_rgba(0,0,0,0.3),-4px_-4px_10px_rgba(255,255,255,0.05)]
+                   hover:-translate-y-0.5 hover:shadow-lg hover:opacity-90 hover:scale-105 
+                   transition-all duration-200 active:translate-y-0 active:scale-100 active:shadow-inner;
+          }
+          .toggle-switch {
+            @apply w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center p-1 cursor-pointer shadow-inner transition-colors duration-300;
+          }
+          .toggle-knob {
+            @apply w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300;
+          }
+        }
+    </style>
+
+    <!-- Custom CSS (Compiled/Directives) -->
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+</head>
+<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text antialiased transition-colors duration-300" x-data x-init="$store.theme.init()">
+
+    <!-- CORS Warning for File Protocol -->
+    <script>
+        if (window.location.protocol === 'file:') {
+            document.write('<div class="bg-red-600 text-white text-center p-2 font-bold">⚠️ You are viewing this via file:// protocol. Components may not load due to CORS. Please use a local server (e.g. VS Code Live Server).</div>');
+        }
+    </script>
+
+    <!-- Navbar Component -->
+    <div x-data="loader('navbar')" x-html="html"></div>
+
+    <!-- Hero Section -->
+    <section class="relative pt-20 pb-20 md:pt-32 md:pb-32 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-light-accent/5 dark:bg-dark-accent/5 -skew-x-12 transform translate-x-20 pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl" x-reveal>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-light-accent/10 dark:bg-dark-accent/10 border border-light-accent/20 dark:border-dark-accent/20 text-light-accent dark:text-dark-accent text-xs font-mono font-semibold mb-6">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-light-accent dark:bg-dark-accent opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-light-accent dark:bg-dark-accent"></span>
+                    </span>
+                    NEXT COHORT STARTS FEB 12
+                </div>
+                
+                <h1 class="font-display font-bold text-5xl md:text-7xl tracking-tight leading-[1.1] mb-6">
+                    Master the art of <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-light-accent to-light-text dark:from-dark-accent dark:to-white">systems engineering.</span>
+                </h1>
+                
+                <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed mb-10 max-w-2xl">
+                    Stop building "todo apps". Start building distributed systems, scalable APIs, and production-grade software. This is not a bootcamp; it's an engineering residency.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#apply" class="btn-primary text-center">
+                        Apply for Residency
+                    </a>
+                    <a href="#curriculum" class="group px-6 py-3 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 hover:-translate-y-0.5 hover:shadow-lg hover:scale-105 transition-all duration-200 active:translate-y-0 active:scale-100 text-center flex items-center justify-center gap-2">
+                        View Curriculum
+                        <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Strip -->
+    <section class="border-y border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0d121f]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-wrap justify-center md:justify-between items-center gap-8 grayscale opacity-70 hover:opacity-100 transition-opacity duration-300">
+                <!-- Logos (Placeholders with text for clarity) -->
+                <div class="font-display font-bold text-xl text-gray-400">GOOGLE</div>
+                <div class="font-display font-bold text-xl text-gray-400">AMAZON</div>
+                <div class="font-display font-bold text-xl text-gray-400">META</div>
+                <div class="font-display font-bold text-xl text-gray-400">STRIPE</div>
+                <div class="font-display font-bold text-xl text-gray-400">AIRBNB</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Section (Timeline) -->
+    <section id="curriculum" class="py-24 bg-light-bg dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 md:w-1/2" x-reveal>
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-gray-900 dark:text-white mb-4">
+                    The <span class="text-light-accent dark:text-dark-accent">Engineering</span> Path
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400">
+                    A 24-week rigorous timeline designed to transform you from a coding enthusiast to a systems thinker.
+                </p>
+            </div>
+
+            <div class="relative space-y-12">
+                <!-- Vertical Line -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800 transform md:-translate-x-1/2"></div>
+
+                <!-- Step 1 -->
+                <div class="relative flex flex-col md:flex-row gap-8 items-start group" x-reveal>
+                    <div class="md:w-1/2 md:text-right md:pr-12 order-2 md:order-1">
+                        <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-2">Foundation & CS Fundamentals</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                            Data structures, algorithms, memory management, and Big O notation. We don't start with frameworks; we start with how computers work.
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2 md:justify-end">
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">C++</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">Algorithms</span>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-light-bg dark:bg-dark-bg border-2 border-light-accent dark:border-dark-accent flex items-center justify-center z-10 order-1 md:order-2">
+                        <span class="w-2 h-2 rounded-full bg-light-accent dark:bg-dark-accent"></span>
+                    </div>
+
+                    <div class="md:w-1/2 md:pl-12 order-3">
+                        <span class="text-light-accent dark:text-dark-accent font-mono text-sm font-bold tracking-widest uppercase">Weeks 1-4</span>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative flex flex-col md:flex-row gap-8 items-start group" x-reveal>
+                     <div class="md:w-1/2 md:text-right md:pr-12 order-2 md:order-1">
+                        <span class="text-light-accent dark:text-dark-accent font-mono text-sm font-bold tracking-widest uppercase">Weeks 5-12</span>
+                    </div>
+                    
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-light-bg dark:bg-dark-bg border-2 border-gray-300 dark:border-gray-700 group-hover:border-light-accent dark:group-hover:border-dark-accent transition-colors flex items-center justify-center z-10 order-1 md:order-2">
+                        <span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700 group-hover:bg-light-accent dark:group-hover:bg-dark-accent transition-colors"></span>
+                    </div>
+
+                    <div class="md:w-1/2 md:pl-12 order-3">
+                         <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-2">Modern Backend Architecture</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                            Building scalable APIs with Node.js, designing complex schemas with PostgreSQL, and understanding authentication & authorization flows.
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">Node.js</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">PostgreSQL</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">Docker</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative flex flex-col md:flex-row gap-8 items-start group" x-reveal>
+                    <div class="md:w-1/2 md:text-right md:pr-12 order-2 md:order-1">
+                        <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-2">Frontend Engineering</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                            Not just UI. State management, performance optimization, React internals, and client-side architecture patterns.
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2 md:justify-end">
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">React</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">TypeScript</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">Tailwind</span>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-light-bg dark:bg-dark-bg border-2 border-gray-300 dark:border-gray-700 group-hover:border-light-accent dark:group-hover:border-dark-accent transition-colors flex items-center justify-center z-10 order-1 md:order-2">
+                        <span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700 group-hover:bg-light-accent dark:group-hover:bg-dark-accent transition-colors"></span>
+                    </div>
+
+                    <div class="md:w-1/2 md:pl-12 order-3">
+                        <span class="text-light-accent dark:text-dark-accent font-mono text-sm font-bold tracking-widest uppercase">Weeks 13-20</span>
+                    </div>
+                </div>
+                 <!-- Step 4 -->
+                 <div class="relative flex flex-col md:flex-row gap-8 items-start group" x-reveal>
+                     <div class="md:w-1/2 md:text-right md:pr-12 order-2 md:order-1">
+                        <span class="text-light-accent dark:text-dark-accent font-mono text-sm font-bold tracking-widest uppercase">Weeks 21-24</span>
+                    </div>
+                    
+                    <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-light-bg dark:bg-dark-bg border-2 border-gray-300 dark:border-gray-700 group-hover:border-light-accent dark:group-hover:border-dark-accent transition-colors flex items-center justify-center z-10 order-1 md:order-2">
+                        <span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-700 group-hover:bg-light-accent dark:group-hover:bg-dark-accent transition-colors"></span>
+                    </div>
+
+                    <div class="md:w-1/2 md:pl-12 order-3">
+                         <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-2">Capstone & Deployment</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                            Build a real-world product from scratch. Deploy to AWS. Set up CI/CD pipelines. Final code review by industry experts.
+                        </p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">AWS</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">CI/CD</span>
+                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-mono rounded text-gray-600 dark:text-gray-400">System Design</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Outcomes / Stats Section (Injected Testimonials Component includes stats) -->
+    <!-- We will inject the testimonials component which has the stats strip as per the component file I created -->
+    <div x-data="loader('testimonials')" x-html="html"></div>
+    
+    <!-- Outcomes Detail Section -->
+    <section id="outcomes" class="py-20 bg-gray-50 dark:bg-[#0d121f]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div class="mb-12" x-reveal>
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-gray-900 dark:text-white mb-4">
+                    Career <span class="text-light-accent dark:text-dark-accent">Impact</span>
+                </h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 border border-gray-200 dark:border-gray-800" x-reveal>
+                    <div class="h-10 w-10 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">Salary Increase</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Our graduates see an average salary increase of 140% compared to their previous roles within 6 months of graduation.
+                    </p>
+                </div>
+                
+                 <div class="glass-card p-8 border border-gray-200 dark:border-gray-800" x-reveal>
+                    <div class="h-10 w-10 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">Hiring Network</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Direct referrals to our network of 500+ tech companies, ranging from Series A startups to Fortune 500s.
+                    </p>
+                </div>
+                
+                 <div class="glass-card p-8 border border-gray-200 dark:border-gray-800" x-reveal>
+                    <div class="h-10 w-10 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">Lifetime Support</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Access to our alumni community, mentorship programs, and career coaching for the rest of your career.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Component -->
+    <div x-data="loader('faq')" x-html="html"></div>
+
+    <!-- CTA Section -->
+    <section id="apply" class="py-24">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center" x-reveal>
+            <h2 class="font-display font-bold text-4xl md:text-5xl text-gray-900 dark:text-white mb-6">
+                Ready to become an <span class="text-light-accent dark:text-dark-accent">engineer</span>?
+            </h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
+                Applications for the February cohort close in 5 days. Secure your spot in the most rigorous bootcamp on the market.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="handleStartApplication(event)" class="btn-primary text-lg px-8 py-4">
+                    Start Application
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Component -->
+    <div x-data="loader('footer')" x-html="html"></div>
+
+</body>
+</html>

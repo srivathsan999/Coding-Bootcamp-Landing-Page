@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | DevForge</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="alternate icon" href="assets/images/favicon.svg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        light: { bg: '#F9FAFB', surface: '#FFFFFF', text: '#111827', accent: '#2563EB', success: '#16A34A', border: '#E5E7EB' },
+                        dark: { bg: '#0B0F19', surface: '#111827', text: '#E5E7EB', accent: '#38BDF8' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'glass-gradient': 'linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0.02))',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+          ::-webkit-scrollbar { width: 8px; height: 8px; }
+          ::-webkit-scrollbar-track { @apply bg-light-bg dark:bg-dark-bg; }
+          ::-webkit-scrollbar-thumb { @apply bg-gray-300 dark:bg-gray-700 rounded; }
+          ::-webkit-scrollbar-thumb:hover { @apply bg-gray-400 dark:bg-gray-600; }
+        }
+        @layer components {
+          .glass { @apply bg-white/70 dark:bg-gray-900/60 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-sm; }
+          .glass-card { @apply glass rounded-xl; }
+          .btn-primary {
+            @apply px-6 py-3 bg-light-accent dark:bg-dark-accent text-white font-medium rounded-lg 
+                   shadow-[4px_4px_10px_rgba(0,0,0,0.1),-4px_-4px_10px_rgba(255,255,255,0.1)] 
+                   dark:shadow-[4px_4px_10px_rgba(0,0,0,0.3),-4px_-4px_10px_rgba(255,255,255,0.05)]
+                   hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0 active:shadow-inner;
+          }
+          .toggle-switch {
+            @apply w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center p-1 cursor-pointer shadow-inner transition-colors duration-300;
+          }
+          .toggle-knob {
+            @apply w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300;
+          }
+        }
+    </style>
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</head>
+<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text min-h-screen flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-300" x-data x-init="$store.theme.init()">
+
+    <!-- Background Decoration -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] right-[-10%] w-96 h-96 bg-light-accent/10 dark:bg-dark-accent/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="w-full max-w-md relative z-10" x-reveal>
+        <!-- Logo -->
+        <div class="flex flex-col items-center mb-8 cursor-pointer" onclick="window.location.href='index.html'">
+            <div class="w-12 h-12 bg-light-accent dark:bg-dark-accent rounded-xl flex items-center justify-center text-white font-mono font-bold text-2xl shadow-lg mb-4">
+                &gt;_
+            </div>
+            <h1 class="font-display font-bold text-2xl tracking-tight text-light-text dark:text-dark-text">
+                DEV<span class="text-light-accent dark:text-dark-accent">FORGE</span>
+            </h1>
+        </div>
+
+        <!-- Glass Card -->
+        <div class="glass-card p-8 md:p-10 backdrop-blur-xl bg-white/80 dark:bg-[#111827]/80 border border-white/50 dark:border-gray-700 shadow-2xl">
+            <h2 class="text-xl font-semibold text-center mb-6 font-display">Apply for Next Cohort</h2>
+            
+            <form class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="fname" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">First Name</label>
+                        <input type="text" id="fname" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent focus:ring-1 focus:ring-light-accent dark:focus:ring-dark-accent outline-none transition-all text-sm" placeholder="Jane">
+                    </div>
+                    <div>
+                        <label for="lname" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Last Name</label>
+                        <input type="text" id="lname" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent focus:ring-1 focus:ring-light-accent dark:focus:ring-dark-accent outline-none transition-all text-sm" placeholder="Doe">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                    <input type="email" id="email" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent focus:ring-1 focus:ring-light-accent dark:focus:ring-dark-accent outline-none transition-all text-sm" placeholder="student@example.com">
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent focus:ring-1 focus:ring-light-accent dark:focus:ring-dark-accent outline-none transition-all text-sm" placeholder="Create a strong password">
+                </div>
+
+                <div class="flex items-start mt-2">
+                    <div class="flex items-center h-5">
+                        <input id="terms" type="checkbox" class="focus:ring-light-accent h-4 w-4 text-light-accent border-gray-300 rounded">
+                    </div>
+                    <div class="ml-2 text-sm">
+                        <label for="terms" class="font-medium text-gray-700 dark:text-gray-300">I agree to the <a href="#" class="text-light-accent dark:text-dark-accent hover:underline">Terms</a> and <a href="#" class="text-light-accent dark:text-dark-accent hover:underline">Privacy Policy</a></label>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-primary w-full py-3.5 text-sm font-semibold tracking-wide mt-4">
+                    Create Account
+                </button>
+            </form>
+
+            <p class="mt-8 text-center text-sm text-gray-500">
+                Already have an account? 
+                <a href="login.html" class="font-semibold text-light-accent dark:text-dark-accent hover:underline">Sign in</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

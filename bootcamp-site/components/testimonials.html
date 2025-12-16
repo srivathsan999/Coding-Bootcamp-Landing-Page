@@ -1,0 +1,54 @@
+<section id="reviews" class="py-20 bg-white dark:bg-[#0B0F19] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <!-- Editorial Testimonial 1 -->
+            <div class="relative" x-reveal>
+                <div class="absolute -top-10 -left-10 text-[120px] leading-none font-serif text-gray-100 dark:text-gray-800 select-none z-0">“</div>
+                <blockquote class="relative z-10">
+                    <p class="text-2xl md:text-3xl font-display font-medium text-gray-900 dark:text-white leading-tight mb-6">
+                        I didn't need another generic tutorial. I needed <span class="text-light-accent dark:text-dark-accent">architecture reviews</span> and production constraints. DevForge gave me that environment.
+                    </p>
+                    <footer class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=faces" alt="Sarah Jenkins" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <cite class="not-italic font-bold text-gray-900 dark:text-white block">Sarah Jenkins</cite>
+                            <span class="text-sm text-gray-500 font-mono">Senior Engineer @ Stripe</span>
+                        </div>
+                    </footer>
+                </blockquote>
+            </div>
+
+            <!-- Stats / Proof -->
+            <div class="grid grid-cols-2 gap-8 border-l border-gray-200 dark:border-gray-800 pl-8 lg:pl-16" x-reveal>
+                <div>
+                    <div class="text-4xl font-mono font-bold text-light-accent dark:text-dark-accent mb-2" x-data="counter(180)">
+                        $<span x-text="current">0</span>k
+                    </div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Avg. Starting Salary</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-mono font-bold text-light-success dark:text-green-400 mb-2" x-data="counter(94)">
+                        <span x-text="current">0</span>%
+                    </div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Placement Rate</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-mono font-bold text-gray-900 dark:text-white mb-2" x-data="counter(12)">
+                        <span x-text="current">0</span>w
+                    </div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Intensive Weeks</div>
+                </div>
+                <div>
+                    <div class="text-4xl font-mono font-bold text-gray-900 dark:text-white mb-2" x-data="counter(500)">
+                        <span x-text="current">0</span>+
+                    </div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Hiring Partners</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum | DevForge</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="alternate icon" href="assets/images/favicon.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (CDN for Development/Preview) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        light: {
+                            bg: '#F9FAFB',
+                            surface: '#FFFFFF',
+                            text: '#111827',
+                            accent: '#2563EB',
+                            success: '#16A34A',
+                            border: '#E5E7EB',
+                        },
+                        dark: {
+                            bg: '#0B0F19',
+                            surface: '#111827',
+                            text: '#E5E7EB',
+                            accent: '#38BDF8',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'glass-gradient': 'linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0.02))',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+          ::-webkit-scrollbar { width: 8px; height: 8px; }
+          ::-webkit-scrollbar-track { @apply bg-light-bg dark:bg-dark-bg; }
+          ::-webkit-scrollbar-thumb { @apply bg-gray-300 dark:bg-gray-700 rounded; }
+          ::-webkit-scrollbar-thumb:hover { @apply bg-gray-400 dark:bg-gray-600; }
+        }
+        @layer components {
+          .glass { @apply bg-white/70 dark:bg-gray-900/60 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-sm; }
+          .glass-card { @apply glass rounded-xl; }
+          .btn-primary {
+            @apply px-6 py-3 bg-light-accent dark:bg-dark-accent text-white font-medium rounded-lg 
+                   shadow-[4px_4px_10px_rgba(0,0,0,0.1),-4px_-4px_10px_rgba(255,255,255,0.1)] 
+                   dark:shadow-[4px_4px_10px_rgba(0,0,0,0.3),-4px_-4px_10px_rgba(255,255,255,0.05)]
+                   hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0 active:shadow-inner;
+          }
+          .toggle-switch {
+            @apply w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center p-1 cursor-pointer shadow-inner transition-colors duration-300;
+          }
+          .toggle-knob {
+            @apply w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300;
+          }
+        }
+    </style>
+
+    <!-- Custom CSS (Compiled/Directives) -->
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+</head>
+<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text antialiased transition-colors duration-300" x-data x-init="$store.theme.init()">
+
+    <!-- Navbar Component -->
+    <div x-data="loader('navbar')" x-html="html"></div>
+
+    <!-- Header -->
+    <header class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="max-w-3xl" x-reveal>
+            <h1 class="font-display font-bold text-4xl md:text-5xl mb-6">
+                System Architecture <span class="text-light-accent dark:text-dark-accent">Syllabus</span>
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+                A 24-week engineering residency designed to break you down and rebuild you as a systems thinker. No "Hello World" tutorials here.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+        
+        <!-- Phases Timeline -->
+        <div class="space-y-24 relative">
+             <!-- Vertical Line -->
+             <div class="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800"></div>
+
+            <!-- Phase 1 -->
+            <section class="relative pl-12 md:pl-20" x-reveal>
+                <div class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-light-accent dark:bg-dark-accent ring-4 ring-white dark:ring-dark-bg"></div>
+                
+                <div class="mb-8">
+                    <span class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks 1-4</span>
+                    <h2 class="font-display font-bold text-3xl mt-2 mb-4">Computer Science Fundamentals</h2>
+                    <p class="text-gray-600 dark:text-gray-400 max-w-3xl">
+                        We start by peeling away the abstractions. You will write C++ to understand memory management, pointers, and data structures. You will implement hash tables and linked lists from scratch.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
+                        <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                            Modules
+                        </h3>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li>• Memory Management & Pointers (C++)</li>
+                            <li>• Big O Notation & Complexity Analysis</li>
+                            <li>• Data Structures (Trees, Graphs, Hash Maps)</li>
+                            <li>• Sorting & Searching Algorithms</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
+                        <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                            Project
+                        </h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            <strong>Custom Shell:</strong> Build a POSIX-compliant shell in C. Handle processes, signals, and pipes.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Phase 2 -->
+            <section class="relative pl-12 md:pl-20" x-reveal>
+                <div class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-dark-bg"></div>
+                
+                <div class="mb-8">
+                    <span class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks 5-12</span>
+                    <h2 class="font-display font-bold text-3xl mt-2 mb-4">Distributed Backend Systems</h2>
+                    <p class="text-gray-600 dark:text-gray-400 max-w-3xl">
+                        Move to high-level architecture. Design scalable REST and GraphQL APIs. Understand database normalization, indexing, and caching strategies using Redis.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
+                        <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+                            Modules
+                        </h3>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li>• Node.js Event Loop & Streams</li>
+                            <li>• PostgreSQL (ACID, Normalization, Indexing)</li>
+                            <li>• Docker & Containerization</li>
+                            <li>• Authentication (JWT, OAuth2, Sessions)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
+                        <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                            Project
+                        </h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            <strong>E-commerce API:</strong> A high-performance API handling 10k requests/sec. Implements rate limiting, caching, and background job processing.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Phase 3 -->
+            <section class="relative pl-12 md:pl-20" x-reveal>
+                <div class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-dark-bg"></div>
+                
+                <div class="mb-8">
+                    <span class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks 13-20</span>
+                    <h2 class="font-display font-bold text-3xl mt-2 mb-4">Frontend Engineering</h2>
+                    <p class="text-gray-600 dark:text-gray-400 max-w-3xl">
+                        Not just "making it pretty". We focus on client-side architecture, state management patterns, performance optimization, and accessibility.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
+                        <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            Modules
+                        </h3>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li>• React Internals (Reconciliation, Virtual DOM)</li>
+                            <li>• State Management (Redux Toolkit, Context)</li>
+                            <li>• TypeScript Generics & Utility Types</li>
+                            <li>• Web Performance (Lighthouse, Lazy Loading)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
+                        <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
+                             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            Project
+                        </h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            <strong>Real-time Dashboard:</strong> Analytics dashboard with live websocket data, complex data visualization, and optimistic UI updates.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Phase 4 -->
+            <section class="relative pl-12 md:pl-20" x-reveal>
+                <div class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-dark-bg"></div>
+                
+                <div class="mb-8">
+                    <span class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks 21-24</span>
+                    <h2 class="font-display font-bold text-3xl mt-2 mb-4">Capstone & DevOps</h2>
+                    <p class="text-gray-600 dark:text-gray-400 max-w-3xl">
+                        The final sprint. You pitch, design, and build a full-scale application. Then you deploy it using industry-standard DevOps pipelines.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
+                        <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                            Modules
+                        </h3>
+                        <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <li>• AWS (EC2, S3, RDS, Lambda)</li>
+                            <li>• CI/CD Pipelines (GitHub Actions)</li>
+                            <li>• System Design Architecture Interviews</li>
+                            <li>• Infrastructure as Code (Terraform)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
+                        <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Capstone
+                        </h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            <strong>Production Launch:</strong> Your final project must be live, accessible via custom domain, and handle real user traffic.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="mt-20 text-center">
+            <a href="register.html" class="btn-primary text-lg px-10 py-4 inline-block">
+                Start Application
+            </a>
+            <p class="mt-4 text-sm text-gray-500">
+                Next cohort starts Feb 12. Only 4 spots remaining.
+            </p>
+        </div>
+
+    </main>
+
+    <!-- Footer Component -->
+    <div x-data="loader('footer')" x-html="html"></div>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | DevForge</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="alternate icon" href="assets/images/favicon.svg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        light: { bg: '#F9FAFB', surface: '#FFFFFF', text: '#111827', accent: '#2563EB', success: '#16A34A', border: '#E5E7EB' },
+                        dark: { bg: '#0B0F19', surface: '#111827', text: '#E5E7EB', accent: '#38BDF8' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'glass-gradient': 'linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0.02))',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+          ::-webkit-scrollbar { width: 8px; height: 8px; }
+          ::-webkit-scrollbar-track { @apply bg-light-bg dark:bg-dark-bg; }
+          ::-webkit-scrollbar-thumb { @apply bg-gray-300 dark:bg-gray-700 rounded; }
+          ::-webkit-scrollbar-thumb:hover { @apply bg-gray-400 dark:bg-gray-600; }
+        }
+        @layer components {
+          .glass { @apply bg-white/70 dark:bg-gray-900/60 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-sm; }
+          .glass-card { @apply glass rounded-xl; }
+          .btn-primary {
+            @apply px-6 py-3 bg-light-accent dark:bg-dark-accent text-white font-medium rounded-lg 
+                   shadow-[4px_4px_10px_rgba(0,0,0,0.1),-4px_-4px_10px_rgba(255,255,255,0.1)] 
+                   dark:shadow-[4px_4px_10px_rgba(0,0,0,0.3),-4px_-4px_10px_rgba(255,255,255,0.05)]
+                   hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0 active:shadow-inner;
+          }
+          .toggle-switch {
+            @apply w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center p-1 cursor-pointer shadow-inner transition-colors duration-300;
+          }
+          .toggle-knob {
+            @apply w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300;
+          }
+        }
+    </style>
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</head>
+<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text min-h-screen flex items-center justify-center p-4 relative overflow-hidden transition-colors duration-300" x-data x-init="$store.theme.init()">
+
+    <!-- Background Decoration -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-light-accent/10 dark:bg-dark-accent/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="w-full max-w-md relative z-10" x-reveal>
+        <!-- Logo -->
+        <div class="flex flex-col items-center mb-8 cursor-pointer" onclick="window.location.href='index.html'">
+            <div class="w-12 h-12 bg-light-accent dark:bg-dark-accent rounded-xl flex items-center justify-center text-white font-mono font-bold text-2xl shadow-lg mb-4">
+                &gt;_
+            </div>
+            <h1 class="font-display font-bold text-2xl tracking-tight text-light-text dark:text-dark-text">
+                DEV<span class="text-light-accent dark:text-dark-accent">FORGE</span>
+            </h1>
+        </div>
+
+        <!-- Glass Card -->
+        <div class="glass-card p-8 md:p-10 backdrop-blur-xl bg-white/80 dark:bg-[#111827]/80 border border-white/50 dark:border-gray-700 shadow-2xl">
+            <h2 class="text-xl font-semibold text-center mb-6 font-display">Student Portal Login</h2>
+            
+            <form class="space-y-5">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Address</label>
+                    <input type="email" id="email" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent focus:ring-1 focus:ring-light-accent dark:focus:ring-dark-accent outline-none transition-all text-sm" placeholder="student@example.com">
+                </div>
+                
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+                        <a href="#" class="text-xs text-light-accent dark:text-dark-accent hover:underline">Forgot?</a>
+                    </div>
+                    <input type="password" id="password" class="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent focus:ring-1 focus:ring-light-accent dark:focus:ring-dark-accent outline-none transition-all text-sm" placeholder="••••••••">
+                </div>
+
+                <button type="button" class="btn-primary w-full py-3.5 text-sm font-semibold tracking-wide mt-2">
+                    Sign In
+                </button>
+            </form>
+
+            <div class="mt-8">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-200 dark:border-gray-700"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white dark:bg-[#111827] text-gray-500">Or continue with</span>
+                    </div>
+                </div>
+
+                <div class="mt-6 grid grid-cols-2 gap-3">
+                    <button class="flex items-center justify-center px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors bg-white dark:bg-gray-900">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24"><path d="M12.545 10.552v3.13h3.306c-.134.866-.992 2.532-3.306 2.532-1.992 0-3.618-1.625-3.618-3.625s1.626-3.625 3.618-3.625c1.134 0 1.895.485 2.328.902l2.483-2.484c-1.583-1.48-3.633-2.396-6.213-2.396C6.697 5 2.5 9.197 2.5 15s4.197 10 10 10c5.772 0 10-4.07 10-9.617 0-.766-.084-1.488-.224-2.178h-9.731z" fill="currentColor"/></svg>
+                    </button>
+                    <button class="flex items-center justify-center px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors bg-white dark:bg-gray-900">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <p class="mt-8 text-center text-sm text-gray-500">
+                Not a member? 
+                <a href="register.html" class="font-semibold text-light-accent dark:text-dark-accent hover:underline">Apply for next cohort</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
