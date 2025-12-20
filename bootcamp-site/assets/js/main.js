@@ -32,22 +32,44 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('loader', (componentName) => ({
         html: '',
         init() {
-            fetch(`./components/${componentName}.html`)
+            // Add timestamp to prevent caching issues during development
+            fetch(`./components/${componentName}.html?v=${new Date().getTime()}`)
                 .then(response => {
                     if (!response.ok) throw new Error('Network response was not ok');
                     return response.text();
                 })
                 .then(html => {
                     this.html = html;
-                    // Re-initialize Alpine on the injected content if necessary (usually x-html doesn't auto-init components inside, but for simple layout it's fine)
-                    // If components have Alpine logic, we might need a different approach or use a proper build.
-                    // For this task, components like Navbar might have logic (mobile menu).
-                    // We will handle mobile menu logic globally or assume simple HTML.
+                    
+                    // After loading the component, we need to highlight the active link
+                    // Use setTimeout to ensure DOM is updated
+                    setTimeout(() => {
+                        this.highlightActiveLink();
+                    }, 50);
                 })
                 .catch(err => {
                     console.warn(`Failed to load component: ${componentName}. Ensure you are running on a local server (e.g., Live Server) to avoid CORS issues.`);
                     this.html = `<div class="p-4 border border-red-500 text-red-500">Error loading ${componentName}</div>`;
                 });
+        },
+        
+        highlightActiveLink() {
+            // Get current page filename
+            const path = window.location.pathname;
+            const page = path.split("/").pop() || 'index.html';
+            
+            // Find all links in the loaded HTML that match the current page
+            // We search within the parent element where x-html is rendered (which is this.$el)
+            const links = this.$el.querySelectorAll('a');
+            
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === page || (page === '' && href === 'index.html')) {
+                    // Add active class (text-light-accent dark:text-dark-accent)
+                    link.classList.add('text-light-accent', 'dark:text-dark-accent', 'font-semibold');
+                    link.classList.remove('text-gray-600', 'dark:text-gray-300');
+                }
+            });
         }
     }));
 

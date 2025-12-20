@@ -132,10 +132,10 @@
     <!-- Pricing Cards -->
     <section class="pb-32 relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                 
                 <!-- Upfront Card -->
-                <div class="glass-card p-8 relative hover:-translate-y-1 transition-all duration-300" 
+                <div class="glass-card p-8 relative hover:-translate-y-1 transition-all duration-300 h-full flex flex-col" 
                      :class="billing === 'upfront' ? 'ring-2 ring-light-accent dark:ring-dark-accent shadow-2xl shadow-blue-500/10 opacity-100 scale-100' : 'opacity-70 scale-95 hover:opacity-100 hover:scale-100'">
                     
                     <div class="absolute top-0 right-0 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg uppercase tracking-wide">
@@ -165,13 +165,13 @@
                         </li>
                     </ul>
 
-                    <a href="#apply" class="block w-full py-3 rounded-lg bg-light-accent dark:bg-dark-accent text-white font-medium text-center hover:opacity-90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0">
+                    <a href="#apply" class="mt-auto block w-full py-3 rounded-lg bg-light-accent dark:bg-dark-accent text-white font-medium text-center hover:opacity-90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0">
                         Apply Now
                     </a>
                 </div>
 
                 <!-- ISA Card -->
-                <div class="glass-card p-8 relative hover:-translate-y-1 transition-transform duration-300"
+                <div class="glass-card p-8 relative hover:-translate-y-1 transition-transform duration-300 h-full flex flex-col"
                      :class="billing === 'isa' ? 'ring-2 ring-purple-500 dark:ring-purple-400 shadow-2xl shadow-purple-500/10 opacity-100 scale-100' : 'opacity-80 scale-95 hover:opacity-100 hover:scale-100'">
                     
                     <div class="absolute top-0 right-0 bg-purple-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg rounded-tr-lg uppercase tracking-wide z-10">
@@ -201,13 +201,13 @@
                         </li>
                     </ul>
 
-                    <a href="#apply" class="block w-full py-3 rounded-lg bg-light-accent dark:bg-dark-accent text-white font-medium text-center hover:opacity-90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0">
+                    <a href="#apply" class="mt-auto block w-full py-3 rounded-lg bg-light-accent dark:bg-dark-accent text-white font-medium text-center hover:opacity-90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0">
                         Apply for ISA
                     </a>
                 </div>
 
                 <!-- Loan Card -->
-                <div class="glass-card p-8 relative hover:-translate-y-1 transition-transform duration-300">
+                <div class="glass-card p-8 relative hover:-translate-y-1 transition-transform duration-300 h-full flex flex-col">
                     <h3 class="font-display font-bold text-xl mb-2 text-gray-900 dark:text-white">Monthly Installments</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400 h-10">Flexible monthly payments through our financing partners.</p>
                     
@@ -231,7 +231,7 @@
                         </li>
                     </ul>
 
-                    <a href="#apply" class="block w-full py-3 rounded-lg bg-light-accent dark:bg-dark-accent text-white font-medium text-center hover:opacity-90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0">
+                    <a href="#apply" class="mt-auto block w-full py-3 rounded-lg bg-light-accent dark:bg-dark-accent text-white font-medium text-center hover:opacity-90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0">
                         Learn More
                     </a>
                 </div>
