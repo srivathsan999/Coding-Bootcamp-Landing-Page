@@ -28,6 +28,42 @@ document.addEventListener('alpine:init', () => {
         }
     });
 
+    // Auth Store
+    Alpine.store('auth', {
+        isLoggedIn: false,
+        userRole: null,
+        userName: null,
+        
+        init() {
+            // Load auth state from localStorage
+            const savedAuth = localStorage.getItem('auth');
+            if (savedAuth) {
+                const auth = JSON.parse(savedAuth);
+                this.isLoggedIn = auth.isLoggedIn || false;
+                this.userRole = auth.userRole || null;
+                this.userName = auth.userName || null;
+            }
+        },
+        
+        login(role, username) {
+            this.isLoggedIn = true;
+            this.userRole = role;
+            this.userName = username;
+            localStorage.setItem('auth', JSON.stringify({
+                isLoggedIn: true,
+                userRole: role,
+                userName: username
+            }));
+        },
+        
+        logout() {
+            this.isLoggedIn = false;
+            this.userRole = null;
+            this.userName = null;
+            localStorage.removeItem('auth');
+        }
+    });
+
     // Component Loader
     Alpine.data('loader', (componentName) => ({
         html: '',
@@ -194,4 +230,18 @@ function handleDownloadSyllabus(event) {
     
     // If you have an actual syllabus PDF file, you can replace the above with:
     // window.open('assets/documents/syllabus.pdf', '_blank');
+}
+
+// Logout function
+function handleLogout() {
+    // Clear auth state
+    if (window.Alpine && window.Alpine.store && window.Alpine.store('auth')) {
+        window.Alpine.store('auth').logout();
+    } else {
+        // Fallback if Alpine isn't ready yet
+        localStorage.removeItem('auth');
+    }
+    
+    // Redirect to home page
+    window.location.href = 'index.html';
 }
