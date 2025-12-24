@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevForge | Professional Coding Bootcamp</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="alternate icon" href="assets/images/favicon.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (CDN for Development/Preview) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        light: {
+                            bg: '#F9FAFB',
+                            surface: '#FFFFFF',
+                            text: '#111827',
+                            accent: '#2563EB',
+                            success: '#16A34A',
+                            border: '#E5E7EB',
+                        },
+                        dark: {
+                            bg: '#0B0F19',
+                            surface: '#111827',
+                            text: '#E5E7EB',
+                            accent: '#38BDF8',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'glass-gradient': 'linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0.02))',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+          ::-webkit-scrollbar { width: 8px; height: 8px; }
+          ::-webkit-scrollbar-track { @apply bg-light-bg dark:bg-dark-bg; }
+          ::-webkit-scrollbar-thumb { @apply bg-gray-300 dark:bg-gray-700 rounded; }
+          ::-webkit-scrollbar-thumb:hover { @apply bg-gray-400 dark:bg-gray-600; }
+        }
+        @layer components {
+          .glass { @apply bg-white/70 dark:bg-gray-900/60 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-sm; }
+          .glass-card { @apply glass rounded-xl; }
+          .btn-primary {
+            @apply px-6 py-3 bg-light-accent dark:bg-dark-accent text-white font-medium rounded-lg 
+                   shadow-[4px_4px_10px_rgba(0,0,0,0.1),-4px_-4px_10px_rgba(255,255,255,0.1)] 
+                   dark:shadow-[4px_4px_10px_rgba(0,0,0,0.3),-4px_-4px_10px_rgba(255,255,255,0.05)]
+                   hover:-translate-y-0.5 hover:shadow-lg hover:opacity-90 hover:scale-105 
+                   transition-all duration-200 active:translate-y-0 active:scale-100 active:shadow-inner;
+          }
+          .toggle-switch {
+            @apply w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center p-1 cursor-pointer shadow-inner transition-colors duration-300;
+          }
+          .toggle-knob {
+            @apply w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300;
+          }
+          .brand-badge {
+            @apply px-4 py-2 md:px-5 md:py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#0d121f]
+                   text-gray-400 font-display font-semibold text-sm md:text-base uppercase tracking-wide
+                   transition-all duration-200 shadow-sm grayscale opacity-80 hover:opacity-100 hover:grayscale-0 hover:scale-105 hover:shadow-lg;
+          }
+        }
+    </style>
+
+    <!-- Custom CSS (Compiled/Directives) -->
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Main JS -->
+    <script src="assets/js/main.js"></script>
+</head>
+<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text antialiased transition-colors duration-300" x-data x-init="$store.theme.init()">
+
+    <!-- CORS Warning for File Protocol -->
+    <script>
+        if (window.location.protocol === 'file:') {
+            document.write('<div class="bg-red-600 text-white text-center p-2 font-bold">⚠️ You are viewing this via file:// protocol. Components may not load due to CORS. Please use a local server (e.g. VS Code Live Server).</div>');
+        }
+    </script>
+
+    <!-- Navbar Component -->
+    <div x-data="loader('navbar')" x-html="html"></div>
+
+    <!-- 1. Hero Section (Outcome-Driven) -->
+    <section class="relative pt-20 pb-20 md:pt-32 md:pb-32 overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-light-accent/5 dark:bg-dark-accent/5 -skew-x-12 transform sm:translate-x-20 pointer-events-none hidden sm:block z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-4xl mx-auto text-center" x-reveal>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-light-accent/10 dark:bg-dark-accent/10 border border-light-accent/20 dark:border-dark-accent/20 text-light-accent dark:text-dark-accent text-xs font-mono font-semibold mb-8">
+                    <span class="relative flex h-2 w-2 overflow-hidden">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-light-accent dark:bg-dark-accent opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-light-accent dark:bg-dark-accent"></span>
+                    </span>
+                    NEXT COHORT STARTS FEB 12
+                </div>
+                
+                <h1 class="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.1] mb-6">
+                    Land Your Dream Job in <span class="text-transparent bg-clip-text bg-gradient-to-r from-light-accent to-purple-600 dark:from-dark-accent dark:to-purple-400">24 Weeks</span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed mb-10 max-w-3xl mx-auto">
+                    Join the 94% of graduates who land high-paying engineering roles at top tech companies. Average starting salary: $180,000.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="handleStartApplication(event)" class="btn-primary text-lg px-8 py-4">
+                        Apply Now
+                    </button>
+                    <a href="curriculum.html" class="group px-8 py-4 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 hover:-translate-y-0.5 hover:shadow-lg hover:scale-105 transition-all duration-200 active:translate-y-0 active:scale-100 text-center flex items-center justify-center gap-2">
+                        Download Curriculum
+                        <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Strip -->
+    <section class="border-y border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0d121f]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-wrap justify-center md:justify-between items-center gap-6">
+                <div class="brand-badge">GOOGLE</div>
+                <div class="brand-badge">AMAZON</div>
+                <div class="brand-badge">META</div>
+                <div class="brand-badge">STRIPE</div>
+                <div class="brand-badge">AIRBNB</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Why This Bootcamp Works -->
+    <section class="py-24 bg-light-bg dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center" x-reveal>
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-gray-900 dark:text-white mb-4">
+                    Why <span class="text-light-accent dark:text-dark-accent">DevForge</span> Works
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    We don't teach you to code. We teach you to engineer systems that scale.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Benefit Card 1 -->
+                <div class="glass-card p-8 border border-gray-200 dark:border-gray-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300" x-reveal>
+                    <div class="h-12 w-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">Production-Ready Skills</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Build real distributed systems, not toy projects. Learn the architecture patterns used at Google, Netflix, and Stripe.
+                    </p>
+                </div>
+
+                <!-- Benefit Card 2 -->
+                <div class="glass-card p-8 border border-gray-200 dark:border-gray-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300" x-reveal>
+                    <div class="h-12 w-12 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">Industry Mentorship</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Learn from senior engineers at top companies. Get code reviews, system design practice, and career guidance.
+                    </p>
+                </div>
+
+                <!-- Benefit Card 3 -->
+                <div class="glass-card p-8 border border-gray-200 dark:border-gray-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300" x-reveal>
+                    <div class="h-12 w-12 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">Intensive & Fast</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        24 weeks of full-time, hands-on learning. No fluff. Just the skills you need to land a $180k+ engineering role.
+                    </p>
+                </div>
+
+                <!-- Benefit Card 4 -->
+                <div class="glass-card p-8 border border-gray-200 dark:border-gray-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300" x-reveal>
+                    <div class="h-12 w-12 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">94% Placement Rate</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Direct connections to 500+ hiring partners. Mock interviews, resume reviews, and job placement support included.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Programs Offered (Reuse Existing) -->
+    <section class="py-24 bg-white dark:bg-[#111827]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center" x-reveal>
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-gray-900 dark:text-white mb-4">
+                    Our <span class="text-light-accent dark:text-dark-accent">Program</span>
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    A 24-week engineering residency designed to break you down and rebuild you as a systems thinker.
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="glass-card p-8 md:p-12 border border-gray-200 dark:border-gray-800" x-reveal>
+                    <div class="mb-8">
+                        <h3 class="font-display font-bold text-2xl md:text-3xl text-gray-900 dark:text-white mb-4">
+                            24-Week Full Stack Engineering Residency
+                        </h3>
+                        <div class="flex flex-wrap gap-4 mb-6">
+                            <span class="px-3 py-1 bg-light-accent/10 dark:bg-dark-accent/10 text-light-accent dark:text-dark-accent text-sm font-mono rounded-full">Full-Time</span>
+                            <span class="px-3 py-1 bg-light-accent/10 dark:bg-dark-accent/10 text-light-accent dark:text-dark-accent text-sm font-mono rounded-full">24 Weeks</span>
+                            <span class="px-3 py-1 bg-light-accent/10 dark:bg-dark-accent/10 text-light-accent dark:text-dark-accent text-sm font-mono rounded-full">Remote</span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">
+                            Stop building "todo apps". Start building distributed systems, scalable APIs, and production-grade software. This is not a bootcamp; it's an engineering residency.
+                        </p>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
+                            Full-time: Mon-Fri, 9am - 6pm (EST). Expect 10-15 hours of homework per week.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <h4 class="font-display font-bold text-lg text-gray-900 dark:text-white mb-3">What You'll Learn</h4>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    <span>Computer Science Fundamentals (C++, Algorithms, Data Structures)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    <span>Modern Backend Architecture (Node.js, PostgreSQL, Docker)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    <span>Frontend Engineering (React, TypeScript, Tailwind)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    <span>Capstone & Deployment (AWS, CI/CD, System Design)</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-display font-bold text-lg text-gray-900 dark:text-white mb-3">What's Included</h4>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    <span>Full access to curriculum</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    <span>Lifetime career support</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    <span>Mock interviews & resume reviews</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    <span>Access to 500+ hiring partners</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="pricing.html" class="btn-primary text-center">View Pricing</a>
+                        <a href="curriculum.html" class="px-6 py-3 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 text-center">
+                            Full Curriculum
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Learning Journey / How It Works -->
+    <section class="py-24 bg-light-bg dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center" x-reveal>
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-gray-900 dark:text-white mb-4">
+                    How It <span class="text-light-accent dark:text-dark-accent">Works</span>
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    Your path from coding enthusiast to systems engineer in 24 weeks.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="glass-card p-8 border border-gray-200 dark:border-gray-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center" x-reveal>
+                    <div class="w-16 h-16 bg-light-accent/10 dark:bg-dark-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-mono font-bold text-light-accent dark:text-dark-accent">01</span>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">Apply & Get Accepted</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Submit your application. We review for motivation and potential, not prior coding experience. Complete a 40-hour pre-work module before Day 1.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass-card p-8 border border-gray-200 dark:border-gray-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center" x-reveal>
+                    <div class="w-16 h-16 bg-light-accent/10 dark:bg-dark-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-mono font-bold text-light-accent dark:text-dark-accent">02</span>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">Learn by Building</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Daily live sessions with senior engineers. Hands-on projects, not tutorials. Code reviews, pair programming, and real-world problem solving.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass-card p-8 border border-gray-200 dark:border-gray-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center" x-reveal>
+                    <div class="w-16 h-16 bg-light-accent/10 dark:bg-dark-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-mono font-bold text-light-accent dark:text-dark-accent">03</span>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">Build Your Capstone</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Design and build a production-grade system from scratch. Deploy to AWS, set up CI/CD, and present to industry experts for final review.
+                    </p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="glass-card p-8 border border-gray-200 dark:border-gray-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center" x-reveal>
+                    <div class="w-16 h-16 bg-light-accent/10 dark:bg-dark-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-mono font-bold text-light-accent dark:text-dark-accent">04</span>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-gray-900 dark:text-white mb-3">Land Your Dream Job</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                        Mock interviews, resume optimization, and direct connections to 500+ hiring partners. Average time to offer: 45 days after graduation.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center" x-reveal>
+                <a href="curriculum.html" class="text-light-accent dark:text-dark-accent font-medium hover:underline inline-flex items-center gap-2">
+                    See Full Curriculum Details
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Student Outcomes & Placement Results -->
+    <section class="py-24 bg-white dark:bg-[#111827]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center" x-reveal>
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-gray-900 dark:text-white mb-4">
+                    Proven <span class="text-light-accent dark:text-dark-accent">Results</span>
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    Real numbers from real graduates working at top tech companies.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16" x-reveal>
+                <div class="bg-light-bg dark:bg-dark-bg p-8 rounded-lg border border-gray-200 dark:border-gray-800 text-center">
+                    <div class="text-4xl font-mono font-bold text-light-accent dark:text-dark-accent mb-2" x-data="counter(180)">$<span x-text="current">0</span>k</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Avg. Starting Salary</div>
+                </div>
+                <div class="bg-light-bg dark:bg-dark-bg p-8 rounded-lg border border-gray-200 dark:border-gray-800 text-center">
+                    <div class="text-4xl font-mono font-bold text-light-success dark:text-green-400 mb-2" x-data="counter(94)"><span x-text="current">0</span>%</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Placement Rate</div>
+                </div>
+                <div class="bg-light-bg dark:bg-dark-bg p-8 rounded-lg border border-gray-200 dark:border-gray-800 text-center">
+                    <div class="text-4xl font-mono font-bold text-gray-900 dark:text-white mb-2" x-data="counter(45)"><span x-text="current">0</span> days</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Avg. Time to Offer</div>
+                </div>
+                <div class="bg-light-bg dark:bg-dark-bg p-8 rounded-lg border border-gray-200 dark:border-gray-800 text-center">
+                    <div class="text-4xl font-mono font-bold text-gray-900 dark:text-white mb-2" x-data="counter(500)">+<span x-text="current">0</span></div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide font-semibold">Hiring Partners</div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 md:p-12 border border-gray-200 dark:border-gray-800" x-reveal>
+                <h3 class="font-display font-bold text-2xl mb-8 text-center">Salary Progression</h3>
+                <div class="space-y-6 max-w-2xl mx-auto">
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-600 dark:text-gray-400">Previous Role</span>
+                            <span class="font-mono font-bold">$55,000</span>
+                        </div>
+                        <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-4 overflow-hidden">
+                            <div class="bg-gray-400 h-full rounded-full" style="width: 30%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="text-gray-900 dark:text-white font-medium">DevForge Graduate</span>
+                            <span class="font-mono font-bold text-light-accent dark:text-dark-accent">$180,000</span>
+                        </div>
+                        <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-4 overflow-hidden">
+                            <div class="bg-light-accent dark:bg-dark-accent h-full rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+                <p class="mt-6 text-sm text-gray-500 dark:text-gray-500 italic text-center">
+                    *Based on audited data from 2024 graduates in major tech hubs (SF, NYC, Austin).
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Student Testimonials / Success Stories -->
+    <section class="py-24 bg-light-bg dark:bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center" x-reveal>
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-gray-900 dark:text-white mb-4">
+                    Success <span class="text-light-accent dark:text-dark-accent">Stories</span>
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    Hear from engineers who transformed their careers with DevForge.
+                </p>
+            </div>
+
+            <!-- Featured Testimonial -->
+            <div class="mb-16" x-reveal>
+                <div class="glass-card p-8 md:p-12 border border-gray-200 dark:border-gray-800 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 font-serif text-9xl leading-none text-light-accent dark:text-dark-accent select-none">"</div>
+                    <div class="relative z-10">
+                        <p class="text-2xl md:text-3xl font-display font-medium leading-relaxed mb-8">
+                            "Most bootcamps teach you syntax. DevForge taught me how to think. The focus on <span class="text-light-accent dark:text-dark-accent">distributed systems</span> and <span class="text-light-accent dark:text-dark-accent">low-level architecture</span> gave me the confidence to pass my Google L4 interviews."
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 bg-gray-200 rounded-full overflow-hidden flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces" alt="Alex Chen" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <div class="font-bold text-lg">Alex Chen</div>
+                                <div class="text-sm font-mono text-gray-500">Software Engineer @ Google</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg p-6" x-reveal>
+                    <div class="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500">
+                        <span class="text-green-500">✔ Merged</span>
+                        <span>pr-review-2401</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                        "The curriculum is brutal but effective. I went from struggling with React state to building custom hooks and optimizing render cycles in 3 weeks."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-100 rounded-full overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces" alt="Jessica Davis" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold">Jessica Davis</div>
+                            <div class="text-xs text-gray-500">Frontend @ Airbnb</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg p-6 flex flex-col" x-reveal>
+                    <div class="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500">
+                        <span class="text-green-500">✔ Merged</span>
+                        <span>pr-review-2405</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed flex-grow">
+                        "The backend module is world-class. We built a custom simplified Redis clone. I use those concepts every day at my current job."
+                    </p>
+                    <div class="flex items-center gap-3 mt-auto">
+                        <div class="w-10 h-10 bg-gray-100 rounded-full overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=faces" alt="Marcus Ross" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold">Marcus Ross</div>
+                            <div class="text-xs text-gray-500">Backend @ Uber</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg p-6" x-reveal>
+                    <div class="flex items-center gap-2 mb-4 text-xs font-mono text-gray-500">
+                        <span class="text-green-500">✔ Merged</span>
+                        <span>pr-review-2412</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                        "Career support isn't just resume reviews. It's mock system design interviews with senior engineers. That was the game changer for me."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-100 rounded-full overflow-hidden flex-shrink-0">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=faces" alt="Sarah Lee" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold">Sarah Lee</div>
+                            <div class="text-xs text-gray-500">Full Stack @ Notion</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="reviews.html" class="text-light-accent dark:text-dark-accent font-medium hover:underline">
+                    Read More Success Stories →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Upcoming Batch / Enrollment Info -->
+    <section class="py-24 bg-white dark:bg-[#111827]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto glass-card p-8 md:p-12 border border-gray-200 dark:border-gray-800 text-center" x-reveal>
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-light-accent/10 dark:bg-dark-accent/10 border border-light-accent/20 dark:border-dark-accent/20 text-light-accent dark:text-dark-accent text-sm font-mono font-semibold mb-6">
+                    <span class="relative flex h-2 w-2 overflow-hidden">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-light-accent dark:bg-dark-accent opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-light-accent dark:bg-dark-accent"></span>
+                    </span>
+                    ENROLLMENT NOW OPEN
+                </div>
+                <h2 class="font-display font-bold text-3xl md:text-4xl text-gray-900 dark:text-white mb-4">
+                    February 2025 Cohort
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+                    Applications for the February cohort close in 5 days. Secure your spot in the most rigorous bootcamp on the market.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-left">
+                    <div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Start Date</div>
+                        <div class="font-display font-bold text-lg">February 12, 2025</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Duration</div>
+                        <div class="font-display font-bold text-lg">24 Weeks</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">Format</div>
+                        <div class="font-display font-bold text-lg">Full-Time Remote</div>
+                    </div>
+                </div>
+                <button onclick="handleStartApplication(event)" class="btn-primary text-lg px-8 py-4">
+                    Reserve Your Seat
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Final Conversion CTA -->
+    <section class="py-24 bg-gradient-to-br from-light-accent/10 to-purple-600/10 dark:from-dark-accent/10 dark:to-purple-600/10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center" x-reveal>
+            <h2 class="font-display font-bold text-4xl md:text-5xl text-gray-900 dark:text-white mb-6">
+                Ready to Transform Your <span class="text-light-accent dark:text-dark-accent">Career</span>?
+            </h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
+                Join the next cohort of engineers building the future. Applications close in 5 days.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="handleStartApplication(event)" class="btn-primary text-lg px-8 py-4">
+                    Start Your Application
+                </button>
+                <a href="pricing.html" class="px-8 py-4 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
+                    View Pricing Options
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Component -->
+    <div x-data="loader('footer')" x-html="html"></div>
+
+</body>
+</html>
+

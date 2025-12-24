@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard | DevForge</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="alternate icon" href="assets/images/favicon.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        light: {
+                            bg: '#F9FAFB',
+                            surface: '#FFFFFF',
+                            text: '#111827',
+                            accent: '#2563EB',
+                            success: '#16A34A',
+                            border: '#E5E7EB',
+                        },
+                        dark: {
+                            bg: '#0B0F19',
+                            surface: '#111827',
+                            text: '#E5E7EB',
+                            accent: '#38BDF8',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'glass-gradient': 'linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0.02))',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+          ::-webkit-scrollbar { width: 8px; height: 8px; }
+          ::-webkit-scrollbar-track { @apply bg-light-bg dark:bg-dark-bg; }
+          ::-webkit-scrollbar-thumb { @apply bg-gray-300 dark:bg-gray-700 rounded; }
+          ::-webkit-scrollbar-thumb:hover { @apply bg-gray-400 dark:bg-gray-600; }
+        }
+        @layer components {
+          .glass { @apply bg-white/70 dark:bg-gray-900/60 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-sm; }
+          .glass-card { @apply glass rounded-xl; }
+          .btn-primary {
+            @apply px-6 py-3 bg-light-accent dark:bg-dark-accent text-white font-medium rounded-lg 
+                   shadow-[4px_4px_10px_rgba(0,0,0,0.1),-4px_-4px_10px_rgba(255,255,255,0.1)] 
+                   dark:shadow-[4px_4px_10px_rgba(0,0,0,0.3),-4px_-4px_10px_rgba(255,255,255,0.05)]
+                   hover:-translate-y-0.5 hover:shadow-lg hover:opacity-90 hover:scale-105 
+                   transition-all duration-200 active:translate-y-0 active:scale-100 active:shadow-inner;
+          }
+          .toggle-switch {
+            @apply w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center p-1 cursor-pointer shadow-inner transition-colors duration-300;
+          }
+          .toggle-knob {
+            @apply w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300;
+          }
+        }
+    </style>
+
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</head>
+<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text antialiased transition-colors duration-300" x-data="{ activeTab: 'overview', showPaymentModal: false, showEnrollModal: false }" x-init="$store.theme.init()">
+
+    <!-- Navbar Component -->
+    <div x-data="loader('navbar')" x-html="html"></div>
+
+    <!-- Dashboard Header -->
+    <header class="bg-white dark:bg-[#111827] border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h1 class="font-display font-bold text-2xl md:text-3xl text-gray-900 dark:text-white">
+                        User Dashboard
+                    </h1>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Manage your enrollment, payments, and progress</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-lg text-sm font-medium">
+                        Active Student
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Navigation Tabs -->
+    <div class="bg-white dark:bg-[#111827] border-b border-gray-200 dark:border-gray-800 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex space-x-8 overflow-x-auto" aria-label="Tabs">
+                <button @click="activeTab = 'overview'" 
+                        :class="activeTab === 'overview' ? 'border-light-accent dark:border-dark-accent text-light-accent dark:text-dark-accent' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
+                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                    Overview
+                </button>
+                <button @click="activeTab = 'enrollment'" 
+                        :class="activeTab === 'enrollment' ? 'border-light-accent dark:border-dark-accent text-light-accent dark:text-dark-accent' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
+                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                    Enrollment
+                </button>
+                <button @click="activeTab = 'payments'" 
+                        :class="activeTab === 'payments' ? 'border-light-accent dark:border-dark-accent text-light-accent dark:text-dark-accent' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
+                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                    Payments
+                </button>
+                <button @click="activeTab = 'progress'" 
+                        :class="activeTab === 'progress' ? 'border-light-accent dark:border-dark-accent text-light-accent dark:text-dark-accent' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
+                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                    Progress
+                </button>
+                <button @click="activeTab = 'assignments'" 
+                        :class="activeTab === 'assignments' ? 'border-light-accent dark:border-dark-accent text-light-accent dark:text-dark-accent' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
+                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                    Assignments
+                </button>
+                <button @click="activeTab = 'transactions'" 
+                        :class="activeTab === 'transactions' ? 'border-light-accent dark:border-dark-accent text-light-accent dark:text-dark-accent' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'"
+                        class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                    Transactions
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Overview Tab -->
+        <div x-show="activeTab === 'overview'" x-transition>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Course Progress</div>
+                    <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">68%</div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-light-accent dark:bg-dark-accent h-2 rounded-full" style="width: 68%"></div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Total Paid</div>
+                    <div class="text-3xl font-bold text-gray-900 dark:text-white">$8,400</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">of $12,000</div>
+                </div>
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Assignments</div>
+                    <div class="text-3xl font-bold text-gray-900 dark:text-white">12/18</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">6 remaining</div>
+                </div>
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Certificates</div>
+                    <div class="text-3xl font-bold text-gray-900 dark:text-white">3</div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">Earned</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <h3 class="font-display font-bold text-lg mb-4">Recent Activity</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 rounded-full bg-green-500 mt-2"></div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">Payment received</div>
+                                <div class="text-xs text-gray-500">$1,200 - Feb 15, 2025</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 rounded-full bg-blue-500 mt-2"></div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">Assignment submitted</div>
+                                <div class="text-xs text-gray-500">Backend API Project - Feb 14, 2025</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 rounded-full bg-purple-500 mt-2"></div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium">Module completed</div>
+                                <div class="text-xs text-gray-500">Week 13-20: Frontend Engineering</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <h3 class="font-display font-bold text-lg mb-4">Upcoming Deadlines</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                            <div>
+                                <div class="text-sm font-medium">Capstone Project</div>
+                                <div class="text-xs text-gray-500">Due in 2 days</div>
+                            </div>
+                            <span class="text-xs font-mono text-red-600 dark:text-red-400">Urgent</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+                            <div>
+                                <div class="text-sm font-medium">System Design Assignment</div>
+                                <div class="text-xs text-gray-500">Due in 5 days</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enrollment Tab -->
+        <div x-show="activeTab === 'enrollment'" x-transition>
+            <div class="mb-6 flex items-center justify-between">
+                <h2 class="font-display font-bold text-2xl">My Enrollments</h2>
+                <button @click="showEnrollModal = true" class="btn-primary text-sm px-4 py-2">Enroll in New Course</button>
+            </div>
+
+            <div class="glass-card p-8 border border-gray-200 dark:border-gray-800">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <div>
+                        <h3 class="font-display font-bold text-xl mb-2">24-Week Full Stack Engineering Residency</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-light-accent/10 dark:bg-dark-accent/10 text-light-accent dark:text-dark-accent text-sm font-mono rounded-full">Full-Time</span>
+                            <span class="px-3 py-1 bg-light-accent/10 dark:bg-dark-accent/10 text-light-accent dark:text-dark-accent text-sm font-mono rounded-full">24 Weeks</span>
+                            <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-sm rounded-full">Enrolled</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Enrollment Date</div>
+                        <div class="font-mono font-bold">Feb 12, 2025</div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Progress: Week 16 of 24</div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                        <div class="bg-light-accent dark:bg-dark-accent h-3 rounded-full" style="width: 68%"></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">View Course Details</button>
+                    <button class="px-4 py-2 text-sm border border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20">Cancel Enrollment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments Tab -->
+        <div x-show="activeTab === 'payments'" x-transition>
+            <div class="mb-6 flex items-center justify-between">
+                <h2 class="font-display font-bold text-2xl">Payment History</h2>
+                <button @click="showPaymentModal = true" class="btn-primary text-sm px-4 py-2">Make Payment</button>
+            </div>
+
+            <div class="glass-card p-6 border border-gray-200 dark:border-gray-800 mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Outstanding Balance</div>
+                        <div class="text-3xl font-bold text-gray-900 dark:text-white">$3,600</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Next Payment Due</div>
+                        <div class="text-lg font-bold text-red-600 dark:text-red-400">Mar 1, 2025</div>
+                    </div>
+                </div>
+                <button @click="showPaymentModal = true" class="w-full btn-primary">Pay Now</button>
+            </div>
+
+            <div class="space-y-4">
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <div class="font-medium">Payment #PAY-2025-001</div>
+                            <div class="text-sm text-gray-500">Feb 15, 2025</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold text-lg">$1,200.00</div>
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs">Paid</span>
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-500">Payment Method: Credit Card • Transaction ID: TXN-789456123</div>
+                </div>
+
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <div class="font-medium">Payment #PAY-2025-002</div>
+                            <div class="text-sm text-gray-500">Jan 15, 2025</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold text-lg">$1,200.00</div>
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs">Paid</span>
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-500">Payment Method: Bank Transfer • Transaction ID: TXN-789456122</div>
+                </div>
+
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <div class="font-medium">Initial Enrollment Payment</div>
+                            <div class="text-sm text-gray-500">Dec 15, 2024</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold text-lg">$6,000.00</div>
+                            <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs">Paid</span>
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-500">Payment Method: Credit Card • Transaction ID: TXN-789456121</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tab -->
+        <div x-show="activeTab === 'progress'" x-transition>
+            <div class="mb-6">
+                <h2 class="font-display font-bold text-2xl mb-2">Course Progress</h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Track your learning journey</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-card p-6 border-2 border-light-accent dark:border-dark-accent">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-display font-bold text-lg">Weeks 13-20: Frontend Engineering</h3>
+                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full text-xs font-medium">In Progress</span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="text-xs text-gray-500 mb-1">Progress: Week 16 of 8</div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div class="bg-light-accent dark:bg-dark-accent h-2 rounded-full" style="width: 50%"></div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">State management, performance optimization, React internals, and client-side architecture patterns.</p>
+                    <button class="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">Continue Learning</button>
+                </div>
+
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-display font-bold text-lg">Weeks 5-12: Modern Backend Architecture</h3>
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-medium">Completed</span>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Building scalable APIs with Node.js, designing complex schemas with PostgreSQL.</p>
+                    <button class="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">View Certificate</button>
+                </div>
+
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-display font-bold text-lg">Weeks 1-4: Foundation & CS Fundamentals</h3>
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-medium">Completed</span>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Data structures, algorithms, memory management, and Big O notation.</p>
+                    <button class="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">View Certificate</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assignments Tab -->
+        <div x-show="activeTab === 'assignments'" x-transition>
+            <div class="mb-6">
+                <h2 class="font-display font-bold text-2xl mb-2">My Assignments</h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Submit and track your assignments</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="glass-card p-6 border-2 border-red-200 dark:border-red-800">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <h3 class="font-display font-bold text-lg mb-1">Capstone Project Proposal</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Design and propose your final capstone project architecture.</p>
+                            <div class="flex items-center gap-4 text-xs text-gray-500">
+                                <span>Due: Feb 20, 2025</span>
+                                <span>•</span>
+                                <span class="text-red-600 dark:text-red-400">2 days remaining</span>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-full text-xs font-medium">Pending</span>
+                    </div>
+                    <button class="btn-primary text-sm px-4 py-2">Submit Assignment</button>
+                </div>
+
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <h3 class="font-display font-bold text-lg mb-1">System Design Assignment</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Design a distributed caching system similar to Redis.</p>
+                            <div class="flex items-center gap-4 text-xs text-gray-500">
+                                <span>Due: Feb 23, 2025</span>
+                                <span>•</span>
+                                <span>5 days remaining</span>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 rounded-full text-xs font-medium">In Progress</span>
+                    </div>
+                    <button class="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">Continue Work</button>
+                </div>
+
+                <div class="glass-card p-6 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <h3 class="font-display font-bold text-lg mb-1">React State Management Project</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Build a complex React app with custom hooks and context API.</p>
+                            <div class="flex items-center gap-4 text-xs text-gray-500">
+                                <span>Submitted: Feb 10, 2025</span>
+                                <span>•</span>
+                                <span class="text-green-600 dark:text-green-400">Grade: 92/100</span>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-xs font-medium">Completed</span>
+                    </div>
+                    <button class="px-4 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">View Feedback</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Tab -->
+        <div x-show="activeTab === 'transactions'" x-transition>
+            <div class="mb-6">
+                <h2 class="font-display font-bold text-2xl mb-2">Transaction History</h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400">All your financial transactions</p>
+            </div>
+
+            <div class="glass-card p-6 border border-gray-200 dark:border-gray-800 overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-gray-200 dark:border-gray-800">
+                            <th class="text-left py-3 px-4 text-sm font-medium text-gray-700 dark:text-gray-300">Transaction ID</th>
+                            <th class="text-left py-3 px-4 text-sm font-medium text-gray-700 dark:text-gray-300">Date</th>
+                            <th class="text-left py-3 px-4 text-sm font-medium text-gray-700 dark:text-gray-300">Description</th>
+                            <th class="text-left py-3 px-4 text-sm font-medium text-gray-700 dark:text-gray-300">Amount</th>
+                            <th class="text-left py-3 px-4 text-sm font-medium text-gray-700 dark:text-gray-300">Status</th>
+                            <th class="text-left py-3 px-4 text-sm font-medium text-gray-700 dark:text-gray-300">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                        <tr>
+                            <td class="py-3 px-4 text-sm font-mono">TXN-789456123</td>
+                            <td class="py-3 px-4 text-sm">Feb 15, 2025</td>
+                            <td class="py-3 px-4 text-sm">Monthly Payment</td>
+                            <td class="py-3 px-4 text-sm font-bold">$1,200.00</td>
+                            <td class="py-3 px-4 text-sm"><span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs">Completed</span></td>
+                            <td class="py-3 px-4 text-sm"><button class="text-light-accent dark:text-dark-accent hover:underline">View Receipt</button></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-sm font-mono">TXN-789456122</td>
+                            <td class="py-3 px-4 text-sm">Jan 15, 2025</td>
+                            <td class="py-3 px-4 text-sm">Monthly Payment</td>
+                            <td class="py-3 px-4 text-sm font-bold">$1,200.00</td>
+                            <td class="py-3 px-4 text-sm"><span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs">Completed</span></td>
+                            <td class="py-3 px-4 text-sm"><button class="text-light-accent dark:text-dark-accent hover:underline">View Receipt</button></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 text-sm font-mono">TXN-789456121</td>
+                            <td class="py-3 px-4 text-sm">Dec 15, 2024</td>
+                            <td class="py-3 px-4 text-sm">Enrollment Fee</td>
+                            <td class="py-3 px-4 text-sm font-bold">$6,000.00</td>
+                            <td class="py-3 px-4 text-sm"><span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-xs">Completed</span></td>
+                            <td class="py-3 px-4 text-sm"><button class="text-light-accent dark:text-dark-accent hover:underline">View Receipt</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Payment Modal -->
+    <div x-show="showPaymentModal" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+         @click.away="showPaymentModal = false">
+        <div class="bg-white dark:bg-[#111827] rounded-lg p-8 max-w-md w-full" @click.stop>
+            <h3 class="font-display font-bold text-xl mb-6">Make Payment</h3>
+            <form class="space-y-4" @submit.prevent="showPaymentModal = false; alert('Payment processed successfully!')">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Amount</label>
+                    <input type="number" value="1200" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Card Number</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Expiry</label>
+                        <input type="text" placeholder="MM/YY" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">CVV</label>
+                        <input type="text" placeholder="123" class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent outline-none">
+                    </div>
+                </div>
+                <div class="flex gap-4 pt-4">
+                    <button type="button" @click="showPaymentModal = false" class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">Cancel</button>
+                    <button type="submit" class="flex-1 btn-primary">Process Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Enrollment Modal -->
+    <div x-show="showEnrollModal" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+         @click.away="showEnrollModal = false">
+        <div class="bg-white dark:bg-[#111827] rounded-lg p-8 max-w-md w-full" @click.stop>
+            <h3 class="font-display font-bold text-xl mb-6">Enroll in New Course</h3>
+            <form class="space-y-4" @submit.prevent="showEnrollModal = false; alert('Enrollment request submitted!')">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Select Course</label>
+                    <select class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent outline-none">
+                        <option>24-Week Full Stack Engineering Residency</option>
+                        <option>12-Week Backend Specialization</option>
+                        <option>8-Week Frontend Intensive</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Payment Plan</label>
+                    <select class="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 focus:border-light-accent dark:focus:border-dark-accent outline-none">
+                        <option>Upfront Payment ($12,000)</option>
+                        <option>Monthly Installments ($1,200/month)</option>
+                        <option>Income Share Agreement (ISA)</option>
+                    </select>
+                </div>
+                <div class="flex gap-4 pt-4">
+                    <button type="button" @click="showEnrollModal = false" class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">Cancel</button>
+                    <button type="submit" class="flex-1 btn-primary">Submit Enrollment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Component -->
+    <div x-data="loader('footer')" x-html="html"></div>
+
+</body>
+</html>
+
