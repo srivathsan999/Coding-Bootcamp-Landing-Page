@@ -105,7 +105,7 @@ document.addEventListener('alpine:init', () => {
                     link.classList.add('text-light-accent', 'dark:text-dark-accent', 'font-semibold');
                     link.classList.remove('text-gray-600', 'dark:text-gray-300');
                 }
-            });
+                });
         }
     }));
 
