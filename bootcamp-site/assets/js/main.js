@@ -64,50 +64,62 @@ document.addEventListener('alpine:init', () => {
         }
     });
 
-    // Component Loader
-    Alpine.data('loader', (componentName) => ({
-        html: '',
-        init() {
-            // Add timestamp to prevent caching issues during development
-            fetch(`./components/${componentName}.html?v=${new Date().getTime()}`)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.text();
-                })
-                .then(html => {
-                    this.html = html;
-                    
-                    // After loading the component, we need to highlight the active link
-                    // Use setTimeout to ensure DOM is updated
-                    setTimeout(() => {
-                        this.highlightActiveLink();
-                    }, 50);
-                })
-                .catch(err => {
-                    console.warn(`Failed to load component: ${componentName}. Ensure you are running on a local server (e.g., Live Server) to avoid CORS issues.`);
-                    this.html = `<div class="p-4 border border-red-500 text-red-500">Error loading ${componentName}</div>`;
-                });
-        },
-        
-        highlightActiveLink() {
-            // Get current page filename
-            const path = window.location.pathname;
-            const page = path.split("/").pop() || 'index.html';
-            
-            // Find all links in the loaded HTML that match the current page
-            // We search within the parent element where x-html is rendered (which is this.$el)
-            const links = this.$el.querySelectorAll('a');
-            
-            links.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href === page || (page === '' && href === 'index.html')) {
-                    // Add active class (text-light-accent dark:text-dark-accent)
-                    link.classList.add('text-light-accent', 'dark:text-dark-accent', 'font-semibold');
-                    link.classList.remove('text-gray-600', 'dark:text-gray-300');
+    // Component Loader (navbar loading removed - navbar is now inlined)
+    Alpine.data('loader', (componentName) => {
+        // Disable navbar loading - navbar is now inlined in all pages
+        if (componentName === 'navbar') {
+            return {
+                html: '',
+                init() {
+                    console.warn('Navbar loader is disabled. Navbar should be inlined directly in pages.');
                 }
-                });
+            };
         }
-    }));
+        
+        return {
+            html: '',
+            init() {
+                // Add timestamp to prevent caching issues during development
+                fetch(`./components/${componentName}.html?v=${new Date().getTime()}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        return response.text();
+                    })
+                    .then(html => {
+                        this.html = html;
+                        
+                        // After loading the component, we need to highlight the active link
+                        // Use setTimeout to ensure DOM is updated
+                        setTimeout(() => {
+                            this.highlightActiveLink();
+                        }, 50);
+                    })
+                    .catch(err => {
+                        console.warn(`Failed to load component: ${componentName}. Ensure you are running on a local server (e.g., Live Server) to avoid CORS issues.`);
+                        this.html = `<div class="p-4 border border-red-500 text-red-500">Error loading ${componentName}</div>`;
+                    });
+            },
+            
+            highlightActiveLink() {
+                // Get current page filename
+                const path = window.location.pathname;
+                const page = path.split("/").pop() || 'index.html';
+                
+                // Find all links in the loaded HTML that match the current page
+                // We search within the parent element where x-html is rendered (which is this.$el)
+                const links = this.$el.querySelectorAll('a');
+                
+                links.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href === page || (page === '' && href === 'index.html')) {
+                        // Add active class (text-light-accent dark:text-dark-accent)
+                        link.classList.add('text-light-accent', 'dark:text-dark-accent', 'font-semibold');
+                        link.classList.remove('text-gray-600', 'dark:text-gray-300');
+                    }
+                    });
+            }
+        };
+    });
 
     // Intersection Observer for Animations
     Alpine.directive('reveal', (el, { value, modifiers }) => {
