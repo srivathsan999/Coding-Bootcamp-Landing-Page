@@ -166,15 +166,17 @@
                 <div class="flex items-center gap-4">
                     <!-- Mobile Menu Button -->
                     <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
                         </svg>
                     </button>
-                    <div class="text-center md:text-left">
-                        <h1 class="font-display font-bold text-xl md:text-2xl lg:text-3xl text-gray-900 dark:text-white">
-                            Admin Dashboard
-                        </h1>
-                        <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">Manage students, courses, payments, and analytics</p>
+                    <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+                        <div class="w-8 h-8 bg-light-accent dark:bg-dark-accent rounded-lg flex items-center justify-center text-white font-mono font-bold text-lg shadow-lg">
+                            &gt;_
+                        </div>
+                        <span class="font-display font-bold text-xl tracking-tight text-light-text dark:text-dark-text">
+                            DEV<span class="text-light-accent dark:text-dark-accent">FORGE</span>
+                        </span>
                     </div>
                 </div>
                 <div class="flex items-center justify-center md:justify-end gap-4">
@@ -636,7 +638,7 @@
             </div>
         </div>
 
-    </main>
+</main>
 
     <!-- Add Student Modal -->
     <div x-show="showAddStudentModal" 
