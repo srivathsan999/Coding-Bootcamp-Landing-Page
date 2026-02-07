@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curriculum | DevForge</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
     <link rel="alternate icon" href="assets/images/favicon.svg">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Tailwind CSS (CDN for Development/Preview) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -79,195 +82,209 @@
 
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
+
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
 </head>
-<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text antialiased transition-colors duration-300" x-data x-init="$store.theme.init()">
+
+<body class="bg-light-bg dark:bg-dark-bg text-light-text dark:text-dark-text antialiased transition-colors duration-300"
+    x-data x-init="$store.theme.init()">
 
     <!-- Navbar Component -->
-    <nav class="sticky top-0 z-50 w-full border-b border-light-border dark:border-gray-800 bg-white/80 dark:bg-dark-bg/90 backdrop-blur-md transition-colors duration-300" x-data="{ mobileMenuOpen: false }">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-            <!-- Logo -->
-            <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
-                <div class="w-8 h-8 bg-light-accent dark:bg-dark-accent rounded-lg flex items-center justify-center text-white font-mono font-bold text-lg shadow-lg">
-                    &gt;_
+    <nav class="sticky top-0 z-50 w-full border-b border-light-border dark:border-gray-800 bg-white/80 dark:bg-dark-bg/90 backdrop-blur-md transition-colors duration-300"
+        x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer"
+                    onclick="window.location.href='index.html'">
+                    <div
+                        class="w-8 h-8 bg-light-accent dark:bg-dark-accent rounded-lg flex items-center justify-center text-white font-mono font-bold text-lg shadow-lg">
+                        &gt;_
+                    </div>
+                    <span class="font-display font-bold text-xl tracking-tight text-light-text dark:text-dark-text">
+                        DEV<span class="text-light-accent dark:text-dark-accent">FORGE</span>
+                    </span>
                 </div>
-                <span class="font-display font-bold text-xl tracking-tight text-light-text dark:text-dark-text">
-                    DEV<span class="text-light-accent dark:text-dark-accent">FORGE</span>
-                </span>
-            </div>
 
-            <!-- Desktop Menu -->
-            <div class="hidden lg:flex items-center space-x-8">
-                <!-- Home Dropdown -->
-                <div class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @keydown.escape="open = false">
-                    <button @click="open = !open" 
-                            @keydown.enter.prevent="open = !open"
+                <!-- Desktop Menu -->
+                <div class="hidden xl:flex items-center space-x-8">
+                    <!-- Home Dropdown -->
+                    <div class="relative group" x-data="{ open: false }" @mouseenter="open = true"
+                        @mouseleave="open = false" @keydown.escape="open = false">
+                        <button @click="open = !open" @keydown.enter.prevent="open = !open"
                             @keydown.space.prevent="open = !open"
-                            class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors flex items-center gap-1" 
-                            :aria-expanded="open"
-                            aria-haspopup="true" 
-                            id="home-menu-button">
-                        Home
-                        <svg class="w-4 h-4 transition-transform duration-200" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div x-show="open" 
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 translate-y-1"
-                         x-transition:enter-end="opacity-100 translate-y-0"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 translate-y-0"
-                         x-transition:leave-end="opacity-0 translate-y-1"
-                         @click.away="open = false"
-                         class="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg py-2 z-50"
-                         role="menu" 
-                         aria-orientation="vertical" 
-                         aria-labelledby="home-menu-button">
-                        <a href="index.html" 
-                           class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-800"
-                           role="menuitem"
-                           @keydown.enter="window.location.href='index.html'">Home</a>
-                        <a href="home2.html" 
-                           class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-800"
-                           role="menuitem"
-                           @keydown.enter="window.location.href='home2.html'">Home – Alternate</a>
+                            class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors flex items-center gap-1"
+                            :aria-expanded="open" aria-haspopup="true" id="home-menu-button">
+                            Home
+                            <svg class="w-4 h-4 transition-transform duration-200" :class="open ? 'rotate-180' : ''"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-1" @click.away="open = false"
+                            class="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg py-2 z-50"
+                            role="menu" aria-orientation="vertical" aria-labelledby="home-menu-button">
+                            <a href="index.html"
+                                class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-800"
+                                role="menuitem" @keydown.enter="window.location.href='index.html'">Home</a>
+                            <a href="home2.html"
+                                class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-800"
+                                role="menuitem" @keydown.enter="window.location.href='home2.html'">Home – Alternate</a>
+                        </div>
+                    </div>
+                    <a href="curriculum.html"
+                        class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors">Curriculum</a>
+                    <a href="outcomes.html"
+                        class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors">Outcomes</a>
+                    <a href="pricing.html"
+                        class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors">Pricing</a>
+                    <a href="reviews.html"
+                        class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors">Reviews</a>
+                    <a href="faq.html"
+                        class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors">FAQ</a>
+
+                    <!-- Dashboard Dropdown -->
+                    <div class="relative group" x-data="{ open: false }" @mouseenter="open = true"
+                        @mouseleave="open = false" @keydown.escape="open = false">
+                        <button @click="open = !open" @keydown.enter.prevent="open = !open"
+                            @keydown.space.prevent="open = !open"
+                            class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors flex items-center gap-1"
+                            :aria-expanded="open" aria-haspopup="true" id="dashboard-menu-button">
+                            Dashboard
+                            <svg class="w-4 h-4 transition-transform duration-200" :class="open ? 'rotate-180' : ''"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-1" @click.away="open = false"
+                            class="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg py-2 z-50"
+                            role="menu" aria-orientation="vertical" aria-labelledby="dashboard-menu-button">
+                            <a href="user-dashboard.html"
+                                class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-800"
+                                role="menuitem" @keydown.enter="window.location.href='user-dashboard.html'">User
+                                Dashboard</a>
+                            <a href="admin-dashboard.html"
+                                class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-800"
+                                role="menuitem" @keydown.enter="window.location.href='admin-dashboard.html'">Admin
+                                Dashboard</a>
+                        </div>
                     </div>
                 </div>
-                <a href="curriculum.html" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors">Curriculum</a>
-                <a href="outcomes.html" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors">Outcomes</a>
-                <a href="pricing.html" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors">Pricing</a>
-                <a href="reviews.html" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors">Reviews</a>
-                <a href="faq.html" class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors">FAQ</a>
-                
-                <!-- Dashboard Dropdown -->
-                <div class="relative group" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" @keydown.escape="open = false">
-                    <button @click="open = !open" 
-                            @keydown.enter.prevent="open = !open"
-                            @keydown.space.prevent="open = !open"
-                            class="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-light-accent dark:hover:text-dark-accent transition-colors flex items-center gap-1" 
-                            :aria-expanded="open"
-                            aria-haspopup="true" 
-                            id="dashboard-menu-button">
-                        Dashboard
-                        <svg class="w-4 h-4 transition-transform duration-200" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+
+                <!-- Right Actions -->
+                <div class="hidden xl:flex items-center gap-6">
+                    <!-- Theme Toggle -->
+                    <button @click="$store.theme.toggle()" class="toggle-switch relative" aria-label="Toggle Dark Mode">
+                        <div class="absolute left-1 text-[10px] text-gray-500 font-bold">🌙</div>
+                        <div class="absolute right-1 text-[10px] text-yellow-500 font-bold">☀️</div>
+                        <div class="toggle-knob absolute top-1 left-1 bg-white"
+                            :class="$store.theme.mode === 'dark' ? 'translate-x-6' : 'translate-x-0'"></div>
+                    </button>
+
+                    <a href="login.html"
+                        class="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
+                        Login
+                    </a>
+                    <a href="register.html" class="btn-primary text-sm ml-2">
+                        Register Now
+                    </a>
+                </div>
+
+                <!-- Mobile/Tablet Menu Button -->
+                <div class="flex items-center xl:hidden gap-4">
+                    <button @click="$store.theme.toggle()" class="text-gray-500 dark:text-gray-400">
+                        <span x-show="$store.theme.mode === 'light'">🌙</span>
+                        <span x-show="$store.theme.mode === 'dark'">☀️</span>
+                    </button>
+                    <button @click="mobileMenuOpen = !mobileMenuOpen"
+                        class="text-gray-600 dark:text-gray-300 hover:text-light-text dark:hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    <div x-show="open" 
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 translate-y-1"
-                         x-transition:enter-end="opacity-100 translate-y-0"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 translate-y-0"
-                         x-transition:leave-end="opacity-0 translate-y-1"
-                         @click.away="open = false"
-                         class="absolute top-full left-0 mt-2 w-56 bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 rounded-lg shadow-lg py-2 z-50"
-                         role="menu" 
-                         aria-orientation="vertical" 
-                         aria-labelledby="dashboard-menu-button">
-                        <a href="user-dashboard.html" 
-                           class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-800"
-                           role="menuitem"
-                           @keydown.enter="window.location.href='user-dashboard.html'">User Dashboard</a>
-                        <a href="admin-dashboard.html" 
-                           class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-800"
-                           role="menuitem"
-                           @keydown.enter="window.location.href='admin-dashboard.html'">Admin Dashboard</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile/Tablet Menu -->
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-2"
+            class="xl:hidden bg-white dark:bg-dark-bg border-b border-gray-200 dark:border-gray-800 shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <!-- Home Dropdown Mobile -->
+                <div x-data="{ homeOpen: false }">
+                    <button @click="homeOpen = !homeOpen"
+                        class="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">
+                        <span>Home</span>
+                        <svg class="w-4 h-4 transition-transform duration-200" :class="homeOpen ? 'rotate-180' : ''"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div x-show="homeOpen" x-collapse class="pl-4 space-y-1">
+                        <a href="index.html"
+                            class="block px-3 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">Home</a>
+                        <a href="home2.html"
+                            class="block px-3 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">Home
+                            – Alternate</a>
                     </div>
                 </div>
-            </div>
+                <a href="curriculum.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">Curriculum</a>
+                <a href="outcomes.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">Outcomes</a>
+                <a href="pricing.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">Pricing</a>
+                <a href="reviews.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">Reviews</a>
+                <a href="faq.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">FAQ</a>
 
-            <!-- Right Actions -->
-            <div class="hidden lg:flex items-center gap-6">
-                <!-- Theme Toggle -->
-                <button @click="$store.theme.toggle()" class="toggle-switch relative" aria-label="Toggle Dark Mode">
-                    <div class="absolute left-1 text-[10px] text-gray-500 font-bold">🌙</div>
-                    <div class="absolute right-1 text-[10px] text-yellow-500 font-bold">☀️</div>
-                    <div class="toggle-knob absolute top-1 left-1 bg-white"
-                         :class="$store.theme.mode === 'dark' ? 'translate-x-6' : 'translate-x-0'"></div>
-                </button>
+                <!-- Dashboard Dropdown Mobile -->
+                <div x-data="{ dashboardOpen: false }">
+                    <button @click="dashboardOpen = !dashboardOpen"
+                        class="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">
+                        <span>Dashboard</span>
+                        <svg class="w-4 h-4 transition-transform duration-200"
+                            :class="dashboardOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div x-show="dashboardOpen" x-collapse class="pl-4 space-y-1">
+                        <a href="user-dashboard.html"
+                            class="block px-3 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">User
+                            Dashboard</a>
+                        <a href="admin-dashboard.html"
+                            class="block px-3 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">Admin
+                            Dashboard</a>
+                    </div>
+                </div>
 
-                <a href="login.html" class="px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
-                    Login
-                </a>
-                <a href="register.html" class="btn-primary text-sm ml-2">
-                    Register Now
-                </a>
-            </div>
-
-            <!-- Mobile/Tablet Menu Button -->
-            <div class="flex items-center lg:hidden gap-4">
-                 <button @click="$store.theme.toggle()" class="text-gray-500 dark:text-gray-400">
-                    <span x-show="$store.theme.mode === 'light'">🌙</span>
-                    <span x-show="$store.theme.mode === 'dark'">☀️</span>
-                </button>
-                <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-600 dark:text-gray-300 hover:text-light-text dark:hover:text-white focus:outline-none">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mobile/Tablet Menu -->
-    <div x-show="mobileMenuOpen" 
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0 -translate-y-2"
-         x-transition:enter-end="opacity-100 translate-y-0"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100 translate-y-0"
-         x-transition:leave-end="opacity-0 -translate-y-2"
-         class="lg:hidden bg-white dark:bg-dark-bg border-b border-gray-200 dark:border-gray-800 shadow-xl">
-        <div class="px-4 pt-2 pb-6 space-y-2">
-            <!-- Home Dropdown Mobile -->
-            <div x-data="{ homeOpen: false }">
-                <button @click="homeOpen = !homeOpen" class="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">
-                    <span>Home</span>
-                    <svg class="w-4 h-4 transition-transform duration-200" :class="homeOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <div x-show="homeOpen" 
-                     x-collapse
-                     class="pl-4 space-y-1">
-                    <a href="index.html" class="block px-3 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">Home</a>
-                    <a href="home2.html" class="block px-3 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">Home – Alternate</a>
+                <div class="border-t border-gray-200 dark:border-gray-700 my-2 pt-4 px-2 space-y-3">
+                    <a href="login.html"
+                        class="block w-3/5 mx-auto text-center px-6 py-3 text-base font-medium text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">Login</a>
+                    <a href="register.html" class="block w-3/5 mx-auto text-center btn-primary">Register Now</a>
                 </div>
             </div>
-            <a href="curriculum.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">Curriculum</a>
-            <a href="outcomes.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">Outcomes</a>
-            <a href="pricing.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">Pricing</a>
-            <a href="reviews.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">Reviews</a>
-            <a href="faq.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">FAQ</a>
-            
-            <!-- Dashboard Dropdown Mobile -->
-            <div x-data="{ dashboardOpen: false }">
-                <button @click="dashboardOpen = !dashboardOpen" class="w-full flex items-center justify-between px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800">
-                    <span>Dashboard</span>
-                    <svg class="w-4 h-4 transition-transform duration-200" :class="dashboardOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <div x-show="dashboardOpen" 
-                     x-collapse
-                     class="pl-4 space-y-1">
-                    <a href="user-dashboard.html" class="block px-3 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">User Dashboard</a>
-                    <a href="admin-dashboard.html" class="block px-3 py-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800">Admin Dashboard</a>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-200 dark:border-gray-700 my-2 pt-4 px-2 space-y-3">
-                <a href="login.html" class="block w-3/5 mx-auto text-center px-6 py-3 text-base font-medium text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">Login</a>
-                <a href="register.html" class="block w-3/5 mx-auto text-center btn-primary">Register Now</a>
-            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <!-- Header -->
     <header class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -277,35 +294,44 @@
                 <span class="text-light-accent dark:text-dark-accent">Syllabus</span>
             </h1>
             <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-                A 24-week engineering residency designed to break you down and rebuild you as a systems thinker. No "Hello World" tutorials here.
+                A 24-week engineering residency designed to break you down and rebuild you as a systems thinker. No
+                "Hello World" tutorials here.
             </p>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        
+
         <!-- Phases Timeline -->
         <div class="space-y-24 relative">
-             <!-- Vertical Line -->
-             <div class="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800"></div>
+            <!-- Vertical Line -->
+            <div class="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-800"></div>
 
             <!-- Phase 1 -->
             <section class="relative pl-12 md:pl-20" x-reveal>
-                <div class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-light-accent dark:bg-dark-accent ring-4 ring-white dark:ring-dark-bg"></div>
-                
+                <div
+                    class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-light-accent dark:bg-dark-accent ring-4 ring-white dark:ring-dark-bg">
+                </div>
+
                 <div class="mb-8">
-                    <span class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks 1-4</span>
+                    <span
+                        class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks
+                        1-4</span>
                     <h2 class="font-display font-bold text-3xl mt-2 mb-4">Computer Science Fundamentals</h2>
                     <p class="text-gray-600 dark:text-gray-400 max-w-3xl">
-                        We start by peeling away the abstractions. You will write C++ to understand memory management, pointers, and data structures. You will implement hash tables and linked lists from scratch.
+                        We start by peeling away the abstractions. You will write C++ to understand memory management,
+                        pointers, and data structures. You will implement hash tables and linked lists from scratch.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
                         <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
                             Modules
                         </h3>
                         <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
@@ -317,11 +343,15 @@
                     </div>
                     <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
                         <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
                             Project
                         </h3>
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                            <strong>Custom Shell:</strong> Build a POSIX-compliant shell in C. Handle processes, signals, and pipes.
+                            <strong>Custom Shell:</strong> Build a POSIX-compliant shell in C. Handle processes,
+                            signals, and pipes.
                         </p>
                     </div>
                 </div>
@@ -329,20 +359,28 @@
 
             <!-- Phase 2 -->
             <section class="relative pl-12 md:pl-20" x-reveal>
-                <div class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-dark-bg"></div>
-                
+                <div
+                    class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-dark-bg">
+                </div>
+
                 <div class="mb-8">
-                    <span class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks 5-12</span>
+                    <span
+                        class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks
+                        5-12</span>
                     <h2 class="font-display font-bold text-3xl mt-2 mb-4">Distributed Backend Systems</h2>
                     <p class="text-gray-600 dark:text-gray-400 max-w-3xl">
-                        Move to high-level architecture. Design scalable REST and GraphQL APIs. Understand database normalization, indexing, and caching strategies using Redis.
+                        Move to high-level architecture. Design scalable REST and GraphQL APIs. Understand database
+                        normalization, indexing, and caching strategies using Redis.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
                         <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                            </svg>
                             Modules
                         </h3>
                         <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
@@ -354,32 +392,44 @@
                     </div>
                     <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
                         <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
                             Project
                         </h3>
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                            <strong>E-commerce API:</strong> A high-performance API handling 10k requests/sec. Implements rate limiting, caching, and background job processing.
+                            <strong>E-commerce API:</strong> A high-performance API handling 10k requests/sec.
+                            Implements rate limiting, caching, and background job processing.
                         </p>
                     </div>
                 </div>
             </section>
 
-             <!-- Phase 3 -->
+            <!-- Phase 3 -->
             <section class="relative pl-12 md:pl-20" x-reveal>
-                <div class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-dark-bg"></div>
-                
+                <div
+                    class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-dark-bg">
+                </div>
+
                 <div class="mb-8">
-                    <span class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks 13-20</span>
+                    <span
+                        class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks
+                        13-20</span>
                     <h2 class="font-display font-bold text-3xl mt-2 mb-4">Frontend Engineering</h2>
                     <p class="text-gray-600 dark:text-gray-400 max-w-3xl">
-                        Not just "making it pretty". We focus on client-side architecture, state management patterns, performance optimization, and accessibility.
+                        Not just "making it pretty". We focus on client-side architecture, state management patterns,
+                        performance optimization, and accessibility.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
                         <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
                             Modules
                         </h3>
                         <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
@@ -391,32 +441,44 @@
                     </div>
                     <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
                         <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
-                             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
                             Project
                         </h3>
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                            <strong>Real-time Dashboard:</strong> Analytics dashboard with live websocket data, complex data visualization, and optimistic UI updates.
+                            <strong>Real-time Dashboard:</strong> Analytics dashboard with live websocket data, complex
+                            data visualization, and optimistic UI updates.
                         </p>
                     </div>
                 </div>
             </section>
 
-             <!-- Phase 4 -->
+            <!-- Phase 4 -->
             <section class="relative pl-12 md:pl-20" x-reveal>
-                <div class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-dark-bg"></div>
-                
+                <div
+                    class="absolute left-4 md:left-8 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-700 ring-4 ring-white dark:ring-dark-bg">
+                </div>
+
                 <div class="mb-8">
-                    <span class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks 21-24</span>
+                    <span
+                        class="font-mono text-sm font-bold text-light-accent dark:text-dark-accent uppercase tracking-widest">Weeks
+                        21-24</span>
                     <h2 class="font-display font-bold text-3xl mt-2 mb-4">Capstone & DevOps</h2>
                     <p class="text-gray-600 dark:text-gray-400 max-w-3xl">
-                        The final sprint. You pitch, design, and build a full-scale application. Then you deploy it using industry-standard DevOps pipelines.
+                        The final sprint. You pitch, design, and build a full-scale application. Then you deploy it
+                        using industry-standard DevOps pipelines.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
                         <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            </svg>
                             Modules
                         </h3>
                         <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
@@ -428,11 +490,17 @@
                     </div>
                     <div class="bg-white dark:bg-[#111827] border border-gray-200 dark:border-gray-800 p-6 rounded-lg">
                         <h3 class="font-mono font-bold text-lg mb-3 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
                             Capstone
                         </h3>
                         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                            <strong>Production Launch:</strong> Your final project must be live, accessible via custom domain, and handle real user traffic.
+                            <strong>Production Launch:</strong> Your final project must be live, accessible via custom
+                            domain, and handle real user traffic.
                         </p>
                     </div>
                 </div>
@@ -454,4 +522,5 @@
     <div x-data="loader('footer')" x-html="html"></div>
 
 </body>
+
 </html>

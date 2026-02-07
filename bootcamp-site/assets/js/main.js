@@ -2,7 +2,7 @@ document.addEventListener('alpine:init', () => {
     // Theme Store
     Alpine.store('theme', {
         mode: localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
-        
+
         init() {
             this.applyTheme();
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
@@ -12,13 +12,13 @@ document.addEventListener('alpine:init', () => {
                 }
             });
         },
-        
+
         toggle() {
             this.mode = this.mode === 'dark' ? 'light' : 'dark';
             localStorage.setItem('theme', this.mode);
             this.applyTheme();
         },
-        
+
         applyTheme() {
             if (this.mode === 'dark') {
                 document.documentElement.classList.add('dark');
@@ -33,7 +33,7 @@ document.addEventListener('alpine:init', () => {
         isLoggedIn: false,
         userRole: null,
         userName: null,
-        
+
         init() {
             // Load auth state from localStorage
             const savedAuth = localStorage.getItem('auth');
@@ -44,7 +44,7 @@ document.addEventListener('alpine:init', () => {
                 this.userName = auth.userName || null;
             }
         },
-        
+
         login(role, username) {
             this.isLoggedIn = true;
             this.userRole = role;
@@ -55,7 +55,7 @@ document.addEventListener('alpine:init', () => {
                 userName: username
             }));
         },
-        
+
         logout() {
             this.isLoggedIn = false;
             this.userRole = null;
@@ -75,7 +75,7 @@ document.addEventListener('alpine:init', () => {
                 }
             };
         }
-        
+
         return {
             html: '',
             init() {
@@ -87,7 +87,7 @@ document.addEventListener('alpine:init', () => {
                     })
                     .then(html => {
                         this.html = html;
-                        
+
                         // After loading the component, we need to highlight the active link
                         // Use setTimeout to ensure DOM is updated
                         setTimeout(() => {
@@ -99,16 +99,16 @@ document.addEventListener('alpine:init', () => {
                         this.html = `<div class="p-4 border border-red-500 text-red-500">Error loading ${componentName}</div>`;
                     });
             },
-            
+
             highlightActiveLink() {
                 // Get current page filename
                 const path = window.location.pathname;
                 const page = path.split("/").pop() || 'index.html';
-                
+
                 // Find all links in the loaded HTML that match the current page
                 // We search within the parent element where x-html is rendered (which is this.$el)
                 const links = this.$el.querySelectorAll('a');
-                
+
                 links.forEach(link => {
                     const href = link.getAttribute('href');
                     if (href === page || (page === '' && href === 'index.html')) {
@@ -116,7 +116,7 @@ document.addEventListener('alpine:init', () => {
                         link.classList.add('text-light-accent', 'dark:text-dark-accent', 'font-semibold');
                         link.classList.remove('text-gray-600', 'dark:text-gray-300');
                     }
-                    });
+                });
             }
         };
     });
@@ -158,10 +158,10 @@ document.addEventListener('alpine:init', () => {
             const update = (currentTime) => {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                
+
                 // Ease out quart
                 const ease = 1 - Math.pow(1 - progress, 4);
-                
+
                 this.current = Math.floor(start + (end - start) * ease);
 
                 if (progress < 1) {
@@ -180,25 +180,25 @@ function handleApplyNow(event) {
     // Check if we're on the index page
     const currentPage = window.location.pathname.split('/').pop() || '';
     const isIndexPage = currentPage === 'index.html' || currentPage === '' || currentPage.endsWith('/') || window.location.pathname.endsWith('index.html');
-    
+
     if (isIndexPage) {
         // Check if there's an apply section on the current page
         const applySection = document.getElementById('apply');
-        
+
         if (applySection) {
             // Prevent default link behavior
             event.preventDefault();
-            
+
             // Smooth scroll to the apply section
-            applySection.scrollIntoView({ 
+            applySection.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
             });
-            
+
             // Update URL without reloading
             const currentUrl = window.location.href.split('#')[0];
             window.history.pushState(null, '', currentUrl + '#apply');
-            
+
             return false;
         }
     }
@@ -211,7 +211,7 @@ function handleStartApplication(event) {
     if (event) {
         event.preventDefault();
     }
-    
+
     // Navigate to register page to start the application process
     window.location.href = 'register.html';
 }
@@ -221,17 +221,17 @@ function handleDownloadSyllabus(event) {
     if (event) {
         event.preventDefault();
     }
-    
+
     // Check if there's a curriculum section on the current page
     const curriculumSection = document.getElementById('curriculum');
-    
+
     if (curriculumSection) {
         // Smooth scroll to the curriculum section
-        curriculumSection.scrollIntoView({ 
+        curriculumSection.scrollIntoView({
             behavior: 'smooth',
             block: 'start'
         });
-        
+
         // Update URL without reloading
         const currentUrl = window.location.href.split('#')[0];
         window.history.pushState(null, '', currentUrl + '#curriculum');
@@ -239,7 +239,7 @@ function handleDownloadSyllabus(event) {
         // If no curriculum section, navigate to curriculum page
         window.location.href = 'curriculum.html';
     }
-    
+
     // If you have an actual syllabus PDF file, you can replace the above with:
     // window.open('assets/documents/syllabus.pdf', '_blank');
 }
@@ -253,7 +253,57 @@ function handleLogout() {
         // Fallback if Alpine isn't ready yet
         localStorage.removeItem('auth');
     }
-    
+
     // Redirect to home page
     window.location.href = 'index.html';
 }
+
+// Navbar Active State Highlighter
+document.addEventListener('DOMContentLoaded', () => {
+    const currentPath = window.location.pathname;
+    const currentPage = currentPath.split('/').pop() || 'index.html';
+
+    const navLinks = document.querySelectorAll('nav a');
+
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+
+        // Exact match
+        if (href === currentPage || (href === 'index.html' && (currentPage === '' || currentPage === '/'))) {
+            // Apply active styles
+            link.classList.add('text-light-accent', 'dark:text-dark-accent', 'font-bold');
+            link.classList.remove('text-gray-600', 'dark:text-gray-300', 'font-medium');
+
+            // Check if this link is part of a dropdown
+            const parentMenu = link.closest('[role="menu"]');
+            if (parentMenu) {
+                const labelledBy = parentMenu.getAttribute('aria-labelledby');
+                if (labelledBy) {
+                    const toggleButton = document.getElementById(labelledBy);
+                    if (toggleButton) {
+                        toggleButton.classList.add('text-light-accent', 'dark:text-dark-accent', 'font-bold');
+                        toggleButton.classList.remove('text-gray-600', 'dark:text-gray-300', 'font-medium');
+                    }
+                }
+            }
+        }
+    });
+
+    // Special handling for "Dashboard" parent dropdown if we are on dashboard pages
+    if (currentPage === 'user-dashboard.html' || currentPage === 'admin-dashboard.html') {
+        const dashboardMenuButton = document.getElementById('dashboard-menu-button');
+        if (dashboardMenuButton) {
+            dashboardMenuButton.classList.add('text-light-accent', 'dark:text-dark-accent', 'font-bold');
+            dashboardMenuButton.classList.remove('text-gray-600', 'dark:text-gray-300', 'font-medium');
+        }
+    }
+
+    // Special handling for "Home" parent dropdown if we are on index.html or home2.html
+    if (currentPage === 'index.html' || currentPage === '' || currentPage === '/' || currentPage === 'home2.html') {
+        const homeMenuButton = document.getElementById('home-menu-button');
+        if (homeMenuButton) {
+            homeMenuButton.classList.add('text-light-accent', 'dark:text-dark-accent', 'font-bold');
+            homeMenuButton.classList.remove('text-gray-600', 'dark:text-gray-300', 'font-medium');
+        }
+    }
+});
